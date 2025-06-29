@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Matematika SMA - Belajar Matematika dengan Mudah</title>
+          <script src="https://cdn.tailwindcss.com"></script>
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+               href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+               rel="stylesheet"
+          />
+          <script>
+               tailwind.config = {
+                    theme: {
+                         fontFamily: {
+                              sans: ['Outfit', 'sans-serif'],
+                         },
+                    },
+               };
+          </script>
+     </head>
+     <body
+          class="font-sans bg-gradient-to-r from-teal-50 to-yellow-100 bg-[url('./gedung.jpg')] bg-cover bg-center w-full"
+     >
+          <div
+               class="absolute inset-0 bg-[url('./gedung.jpg')] bg-cover bg-center opacity-5"
+          ></div>
+          <!-- Navbar -->
+          <nav class="bg-white shadow-md fixed w-full z-10">
+               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16 items-center">
+                         <div class="flex items-center">
+                              <div class="flex-shrink-0 flex items-center">
+                                   <img
+                                        class="h-8 w-auto"
+                                        src="images.png"
+                                        alt="Logo Matematika"
+                                   />
+                                   <span
+                                        class="ml-2 text-xl font-semibold text-gray-800"
+                                        >Belajar Matematika</span
+                                   >
+                              </div>
+                         </div>
+
+                         <!-- Desktop Menu -->
+                         <div
+                              class="hidden md:ml-6 md:flex md:items-center md:space-x-4"
+                         >
+                              <a
+                                   href="#"
+                                   class="text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                                   id="beranda-link"
+                              >
+                                   <i class="fas fa-home mr-1"></i> Beranda
+                              </a>
+                              <a
+                                   href="#"
+                                   class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                                   id="bahan-ajar-link"
+                              >
+                                   <i class="fas fa-book mr-1"></i> Bahan Ajar
+                              </a>
+                              <a
+                                   href="#"
+                                   class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                                   id="quiz-link"
+                              >
+                                   <i class="fas fa-question-circle mr-1"></i>
+                                   Quiz
+                              </a>
+                              <a
+                                   href="#"
+                                   class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                                   id="tentang-link"
+                              >
+                                   <i class="fas fa-info-circle mr-1"></i>
+                                   Tentang
+                              </a>
+                         </div>
+
+                         <!-- Mobile menu button -->
+                         <div class="md:hidden flex items-center">
+                              <button
+                                   type="button"
+                                   id="mobile-menu-button"
+                                   class="text-gray-600 hover:text-indigo-600 focus:outline-none"
+                              >
+                                   <i class="fas fa-bars"></i>
+                              </button>
+                         </div>
+                    </div>
+               </div>
+
+               <!-- Mobile Menu -->
+               <div id="mobile-menu" class="md:hidden hidden">
+                    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white">
+                         <a
+                              href="#"
+                              class="text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                              id="mobile-beranda-link"
+                         >
+                              <i class="fas fa-home mr-1"></i> Beranda
+                         </a>
+                         <a
+                              href="#"
+                              class="text-gray-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                              id="mobile-bahan-ajar-link"
+                         >
+                              <i class="fas fa-book mr-1"></i> Bahan Ajar
+                         </a>
+                         <a
+                              href="#"
+                              class="text-gray-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                              id="mobile-quiz-link"
+                         >
+                              <i class="fas fa-question-circle mr-1"></i> Quiz
+                         </a>
+                         <a
+                              href="#"
+                              class="text-gray-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                              id="mobile-tentang-link"
+                         >
+                              <i class="fas fa-info-circle mr-1"></i> Tentang
+                         </a>
+                    </div>
+               </div>
+          </nav>
+
+          <!-- Bahan Ajar -->
+          <section id="bahan-ajar" class="content-section">
+               <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+                    Bahan Ajar Matematika SMA
+               </h1>
+               <div
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+               >
+                    <div
+                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                         onclick="loadMateri('aljabar')"
+                    >
+                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
+                              Aljabar
+                         </h3>
+                         <p class="text-gray-600 mb-4">
+                              Persamaan, pertidaksamaan, fungsi, dan matriks
+                         </p>
+                         <div
+                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
+                         >
+                              <div
+                                   class="bg-indigo-600 h-2.5 rounded-full"
+                                   style="width: 75%"
+                              ></div>
+                         </div>
+                         <span class="text-sm text-gray-500">75% selesai</span>
+                    </div>
+                    <div
+                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                         onclick="loadMateri('geometri')"
+                    >
+                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
+                              Geometri
+                         </h3>
+                         <p class="text-gray-600 mb-4">
+                              Bangun ruang, trigonometri, dan transformasi
+                              geometri
+                         </p>
+                         <div
+                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
+                         >
+                              <div
+                                   class="bg-indigo-600 h-2.5 rounded-full"
+                                   style="width: 60%"
+                              ></div>
+                         </div>
+                         <span class="text-sm text-gray-500">60% selesai</span>
+                    </div>
+                    <div
+                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                         onclick="loadMateri('kalkulus')"
+                    >
+                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
+                              Kalkulus
+                         </h3>
+                         <p class="text-gray-600 mb-4">
+                              Limit, turunan, dan integral
+                         </p>
+                         <div
+                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
+                         >
+                              <div
+                                   class="bg-indigo-600 h-2.5 rounded-full"
+                                   style="width: 45%"
+                              ></div>
+                         </div>
+                         <span class="text-sm text-gray-500">45% selesai</span>
+                    </div>
+                    <div
+                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+                         onclick="loadMateri('statistik')"
+                    >
+                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
+                              Statistika & Probabilitas
+                         </h3>
+                         <p class="text-gray-600 mb-4">
+                              Data, peluang, dan distribusi
+                         </p>
+                         <div
+                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
+                         >
+                              <div
+                                   class="bg-indigo-600 h-2.5 rounded-full"
+                                   style="width: 30%"
+                              ></div>
+                         </div>
+                         <span class="text-sm text-gray-500">30% selesai</span>
+                    </div>
+               </div>
+               <div
+                    id="materi-detail"
+                    class="bg-white p-6 rounded-lg shadow-md"
+               >
+                    <!-- Konten materi akan dimuat di sini -->
+               </div>
+          </section>
+
+          <!-- Footer -->
+          <footer class="bg-gray-800 text-white py-8">
+               <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                         <div class="footer-section">
+                              <h3 class="text-lg font-semibold mb-4">Kontak</h3>
+                              <p class="mb-2">
+                                   <i class="fas fa-envelope mr-2"></i>
+                                   aan.junaidi@gmail.com
+                              </p>
+                              <p>
+                                   <i class="fas fa-phone mr-2"></i>
+                                   0823-80856957
+                              </p>
+                         </div>
+
+                         <div class="footer-section">
+                              <h3 class="text-lg font-semibold mb-4">
+                                   Link Cepat
+                              </h3>
+                              <ul class="space-y-2">
+                                   <li>
+                                        <a
+                                             href="https://smaunggulalfahd.sch.id/"
+                                             target="_blank"
+                                             class="hover:text-indigo-300 transition-colors duration-300"
+                                             >Website SMA Unggul Islam
+                                             Al-Fahd</a
+                                        >
+                                   </li>
+                                   <li>
+                                        <a
+                                             href="#"
+                                             class="hover:text-indigo-300 transition-colors duration-300"
+                                             >Beranda</a
+                                        >
+                                   </li>
+                                   <li>
+                                        <a
+                                             href="#"
+                                             class="hover:text-indigo-300 transition-colors duration-300"
+                                             >Bahan Ajar</a
+                                        >
+                                   </li>
+                                   <li>
+                                        <a
+                                             href="#"
+                                             class="hover:text-indigo-300 transition-colors duration-300"
+                                             >Quiz</a
+                                        >
+                                   </li>
+                              </ul>
+                         </div>
+                         <div class="footer-section">
+                              <h3 class="text-lg font-semibold mb-4">
+                                   Sosial Media
+                              </h3>
+                              <div class="flex space-x-4">
+                                   <a
+                                        href="https://www.facebook.com/smaunggulislamalfahd/?locale=id_ID"
+                                        class="text-white hover:text-indigo-300 text-xl transition-colors duration-300"
+                                   >
+                                        <i class="fab fa-facebook"></i>
+                                   </a>
+                                   <a
+                                        href="https://www.instagram.com/smaunggulislamalfahd/?hl=en"
+                                        class="text-white hover:text-indigo-300 text-xl transition-colors duration-300"
+                                   >
+                                        <i class="fab fa-instagram"></i>
+                                   </a>
+                                   <a
+                                        href="https://www.youtube.com/channel/UCx6MNPBHS48b0_hSlJA0nkA"
+                                        class="text-white hover:text-indigo-300 text-xl transition-colors duration-300"
+                                   >
+                                        <i class="fab fa-youtube"></i>
+                                   </a>
+                              </div>
+                         </div>
+                    </div>
+                    <div
+                         class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400"
+                    >
+                         <p>&copy; 2025 Matematika SMA. All Rights Reserved.</p>
+                    </div>
+               </div>
+          </footer>
+
+          <script>
+               // Mobile menu toggle
+               const mobileMenuButton =
+                    document.getElementById('mobile-menu-button');
+               const mobileMenu = document.getElementById('mobile-menu');
+
+               mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+               });
+
+               // Function to handle navigation
+               function navigateToSection(sectionId) {
+                    // Hide all sections
+                    document
+                         .querySelectorAll('.content-section')
+                         .forEach((section) => {
+                              section.classList.add('hidden');
+                         });
+
+                    // Show selected section
+                    document
+                         .getElementById(sectionId)
+                         .classList.remove('hidden');
+
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+               }
+
+               // Set up event listeners for desktop nav links
+               document
+                    .querySelectorAll('nav a[id$="-link"]')
+                    .forEach((link) => {
+                         link.addEventListener('click', function (e) {
+                              e.preventDefault();
+                              const sectionId = this.id.replace('-link', '');
+                              navigateToSection(sectionId);
+
+                              // Update active state
+                              document
+                                   .querySelectorAll('nav a')
+                                   .forEach((navLink) => {
+                                        navLink.classList.remove(
+                                             'text-indigo-600'
+                                        );
+                                        navLink.classList.add(
+                                             'text-gray-600',
+                                             'hover:text-indigo-600'
+                                        );
+                                   });
+                              this.classList.remove(
+                                   'text-gray-600',
+                                   'hover:text-indigo-600'
+                              );
+                              this.classList.add('text-indigo-600');
+                         });
+                    });
+
+               // Set up event listeners for mobile nav links
+               document
+                    .querySelectorAll('#mobile-menu a[id^="mobile-"]')
+                    .forEach((link) => {
+                         link.addEventListener('click', function (e) {
+                              e.preventDefault();
+                              const sectionId = this.id
+                                   .replace('mobile-', '')
+                                   .replace('-link', '');
+                              navigateToSection(sectionId);
+
+                              // Update active state for both mobile and desktop
+                              document
+                                   .querySelectorAll('nav a, #mobile-menu a')
+                                   .forEach((navLink) => {
+                                        navLink.classList.remove(
+                                             'text-indigo-600'
+                                        );
+                                        navLink.classList.add(
+                                             'text-gray-600',
+                                             'hover:text-indigo-600'
+                                        );
+                                   });
+
+                              // Update clicked link
+                              this.classList.remove(
+                                   'text-gray-600',
+                                   'hover:text-indigo-600'
+                              );
+                              this.classList.add('text-indigo-600');
+
+                              // Also update corresponding desktop link
+                              const desktopLink = document.getElementById(
+                                   `${sectionId}-link`
+                              );
+                              if (desktopLink) {
+                                   desktopLink.classList.remove(
+                                        'text-gray-600',
+                                        'hover:text-indigo-600'
+                                   );
+                                   desktopLink.classList.add('text-indigo-600');
+                              }
+                         });
+                    });
+
+               // Set Beranda as active by default
+               document
+                    .getElementById('beranda-link')
+                    .classList.add('text-indigo-600');
+               document
+                    .getElementById('beranda-link')
+                    .classList.remove('text-gray-600', 'hover:text-indigo-600');
+               document
+                    .getElementById('mobile-beranda-link')
+                    .classList.add('text-indigo-600');
+               document
+                    .getElementById('mobile-beranda-link')
+                    .classList.remove('text-gray-600', 'hover:text-indigo-600');
+               document.getElementById('beranda').classList.remove('hidden');
+
+               // Placeholder for loadMateri function
+               function loadMateri(topic) {
+                    const detailSection =
+                         document.getElementById('materi-detail');
+                    detailSection.innerHTML = `
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">${
+                     topic.charAt(0).toUpperCase() + topic.slice(1)
+                }</h2>
+                <p class="text-gray-600">Detail materi ${topic} akan ditampilkan di sini.</p>
+            `;
+               }
+          </script>
+     </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Iframe Navigator with Tailwind</title>
+          <script src="https://cdn.tailwindcss.com"></script>
+     </head>
+     <body class="bg-gray-50 p-6">
+          <div class="max-w-6xl mx-auto">
+               <!-- Tombol Navigasi -->
+               <div class="flex flex-wrap gap-3 mb-4">
+                    <button
+                         onclick="changeIframe('https://example.com/page1')"
+                         class="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                    >
+                         Halaman 1
+                    </button>
+                    <button
+                         onclick="changeIframe('https://example.com/page2')"
+                         class="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                    >
+                         Halaman 2
+                    </button>
+                    <button
+                         onclick="changeIframe('https://example.com/page3')"
+                         class="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                    >
+                         Halaman 3
+                    </button>
+                    <button
+                         onclick="changeIframe('https://example.com/page4')"
+                         class="px-5 py-2.5 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-all hover:-translate-y-0.5 shadow-md hover:shadow-lg"
+                    >
+                         Halaman 4
+                    </button>
+               </div>
+
+               <!-- Iframe Container -->
+               <div
+                    class="w-full h-[600px] rounded-xl overflow-hidden shadow-lg border border-gray-200"
+               >
+                    <iframe
+                         id="contentFrame"
+                         src="https://example.com/page1"
+                         class="w-full h-full"
+                         frameborder="0"
+                         allowfullscreen
+                    ></iframe>
+               </div>
+          </div>
+
+          <script>
+               function changeIframe(url) {
+                    document.getElementById('contentFrame').src = url;
+               }
+          </script>
+     </body>
+</html>

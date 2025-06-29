@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Matrix Master - Timed Quiz</title>
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               :root {
+                    --bg-color: #f5f5f7;
+                    --card-bg: #ffffff;
+                    --primary: #0071e3;
+                    --primary-hover: #0062c3;
+                    --text-primary: #1d1d1f;
+                    --text-secondary: #86868b;
+                    --border: #d2d2d7;
+                    --correct: #34c759;
+                    --incorrect: #ff3b30;
+                    --timer-warning: #ff9500;
+                    --timer-critical: #ff3b30;
+                    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+               }
+
+               body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                         Roboto, Helvetica, Arial, sans-serif;
+                    background-color: var(--bg-color);
+                    color: var(--text-primary);
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    line-height: 1.5;
+                    -webkit-font-smoothing: antialiased;
+               }
+
+               header {
+                    text-align: center;
+                    margin-bottom: 30px;
+               }
+
+               h1 {
+                    font-size: 28px;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    color: var(--text-primary);
+               }
+
+               .subtitle {
+                    color: var(--text-secondary);
+                    font-size: 17px;
+                    margin-bottom: 24px;
+               }
+
+               .difficulty-selector {
+                    text-align: center;
+                    margin-bottom: 30px;
+               }
+
+               .difficulty-buttons {
+                    display: flex;
+                    justify-content: center;
+                    gap: 12px;
+                    margin-top: 16px;
+               }
+
+               .difficulty-btn {
+                    padding: 10px 20px;
+                    background-color: transparent;
+                    color: var(--primary);
+                    border: 1px solid var(--primary);
+                    border-radius: 20px;
+                    font-size: 15px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+               }
+
+               .difficulty-btn:hover,
+               .difficulty-btn.active {
+                    background-color: var(--primary);
+                    color: white;
+               }
+
+               .card {
+                    background-color: var(--card-bg);
+                    border-radius: 14px;
+                    padding: 28px;
+                    box-shadow: var(--shadow);
+                    margin-bottom: 24px;
+               }
+
+               .question-container {
+                    display: none;
+               }
+
+               .question-container.active {
+                    display: block;
+               }
+
+               .question-text {
+                    font-size: 18px;
+                    margin-bottom: 20px;
+                    font-weight: 500;
+               }
+
+               .options {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 12px;
+                    margin-bottom: 20px;
+               }
+
+               .option {
+                    display: flex;
+                    align-items: center;
+                    padding: 14px 18px;
+                    background-color: var(--bg-color);
+                    border-radius: 10px;
+                    border: 1px solid var(--border);
+                    transition: all 0.2s ease;
+                    cursor: pointer;
+               }
+
+               .option:hover {
+                    border-color: var(--primary);
+               }
+
+               .option input {
+                    margin-right: 12px;
+                    accent-color: var(--primary);
+                    transform: scale(1.1);
+               }
+
+               .timer-container {
+                    text-align: center;
+                    margin-bottom: 20px;
+               }
+
+               .timer {
+                    display: inline-block;
+                    font-size: 18px;
+                    font-weight: 500;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    background-color: rgba(0, 113, 227, 0.1);
+               }
+
+               .timer.warning {
+                    background-color: rgba(255, 149, 0, 0.1);
+                    color: var(--timer-warning);
+               }
+
+               .timer.critical {
+                    background-color: rgba(255, 59, 48, 0.1);
+                    color: var(--timer-critical);
+                    animation: pulse 1s infinite;
+               }
+
+               @keyframes pulse {
+                    0% {
+                         opacity: 1;
+                    }
+                    50% {
+                         opacity: 0.7;
+                    }
+                    100% {
+                         opacity: 1;
+                    }
+               }
+
+               .navigation {
+                    display: flex;
+                    justify-content: space-between;
+               }
+
+               .nav-btn {
+                    padding: 12px 24px;
+                    background-color: var(--primary);
+                    color: white;
+                    border: none;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+               }
+
+               .nav-btn:hover {
+                    background-color: var(--primary-hover);
+                    transform: translateY(-2px);
+               }
+
+               .nav-btn.finish {
+                    background-color: var(--primary);
+               }
+
+               .nav-btn.finish:hover {
+                    background-color: var(--primary-hover);
+               }
+
+               .result {
+                    display: none;
+                    background-color: var(--card-bg);
+                    border-radius: 14px;
+                    padding: 28px;
+                    box-shadow: var(--shadow);
+                    margin-top: 24px;
+               }
+
+               .result-title {
+                    font-size: 22px;
+                    font-weight: 600;
+                    text-align: center;
+                    margin-bottom: 20px;
+               }
+
+               .score {
+                    text-align: center;
+                    font-size: 20px;
+                    margin-bottom: 24px;
+                    padding: 16px;
+                    background-color: var(--bg-color);
+                    border-radius: 10px;
+               }
+
+               .question-result {
+                    padding: 18px;
+                    margin-bottom: 16px;
+                    border-radius: 10px;
+                    border-left: 4px solid transparent;
+               }
+
+               .correct {
+                    background-color: rgba(52, 199, 89, 0.1);
+                    border-left-color: var(--correct);
+               }
+
+               .incorrect {
+                    background-color: rgba(255, 59, 48, 0.1);
+                    border-left-color: var(--incorrect);
+               }
+
+               .progress-bar {
+                    width: 100%;
+                    height: 6px;
+                    background-color: var(--border);
+                    border-radius: 3px;
+                    margin-bottom: 20px;
+                    overflow: hidden;
+               }
+
+               .progress {
+                    height: 100%;
+                    background-color: var(--primary);
+                    width: 0%;
+                    transition: width 0.3s ease;
+               }
+
+               @media (max-width: 768px) {
+                    body {
+                         padding: 16px;
+                    }
+
+                    .card,
+                    .result {
+                         padding: 20px;
+                    }
+
+                    .difficulty-buttons {
+                         flex-direction: column;
+                         align-items: center;
+                    }
+
+                    .difficulty-btn {
+                         width: 80%;
+                    }
+               }
+          </style>
+     </head>
+     <body>
+          <header>
+               <h1>Matrix Master</h1>
+               <p class="subtitle">
+                    Uji pemahaman matriks Anda dengan timer per soal
+               </p>
+          </header>
+
+          <div class="difficulty-selector">
+               <p>Pilih tingkat kesulitan:</p>
+               <div class="difficulty-buttons">
+                    <button class="difficulty-btn active" data-level="easy">
+                         Dasar
+                    </button>
+                    <button class="difficulty-btn" data-level="medium">
+                         Menengah
+                    </button>
+                    <button class="difficulty-btn" data-level="hard">
+                         Lanjutan
+                    </button>
+               </div>
+          </div>
+
+          <div class="card" id="quizContainer">
+               <div id="startScreen">
+                    <h2>Instruksi Quiz:</h2>
+                    <ul>
+                         <li>Setiap soal memiliki waktu 2 menit</li>
+                         <li>Anda tidak bisa kembali ke soal sebelumnya</li>
+                         <li>Soal akan diberikan secara acak</li>
+                         <li>Pilih jawaban yang paling benar</li>
+                    </ul>
+                    <button
+                         id="startQuizBtn"
+                         class="nav-btn"
+                         style="
+                              display: block;
+                              margin: 0 auto;
+                              margin-top: 20px;
+                         "
+                    >
+                         Mulai Quiz
+                    </button>
+               </div>
+
+               <!-- Kontainer untuk semua soal -->
+               <div id="questionsWrapper" style="display: none">
+                    <div class="progress-bar">
+                         <div class="progress" id="progressBar"></div>
+                    </div>
+
+                    <!-- Timer akan ditempatkan di sini -->
+                    <div class="timer-container">
+                         <div class="timer" id="timer">02:00</div>
+                    </div>
+
+                    <!-- Soal akan dimuat dinamis di sini -->
+                    <div id="questionsContainer"></div>
+               </div>
+          </div>
+
+          <div class="card result" id="quizResult"></div>
+
+          <script>
+               // Database soal matriks
+               const quizData = {
+                    easy: [
+                         {
+                              question: `Hasil dari \\( \\begin{bmatrix} 2 & 3 \\\\ 1 & 4 \\end{bmatrix} + \\begin{bmatrix} 1 & 0 \\\\ 2 & 1 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 3 & 3 \\\\ 3 & 5 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & 0 \\\\ 2 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 3 \\\\ -1 & 3 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 3 & 0 \\\\ 0 & 5 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Determinan dari matriks \\( \\begin{bmatrix} 5 & 2 \\\\ 3 & 1 \\end{bmatrix} \\) adalah:`,
+                              options: ['-1', '0', '1', '11'],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Hasil perkalian \\( \\begin{bmatrix} 1 & 2 \\end{bmatrix} \\times \\begin{bmatrix} 3 \\\\ 4 \\end{bmatrix} \\) adalah:`,
+                              options: ['11', '[3 8]', '[4 6]', '10'],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Jika \\( A = \\begin{bmatrix} 2 & 0 \\\\ 0 & 2 \\end{bmatrix} \\), maka \\( 3A \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 6 & 0 \\\\ 0 & 6 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 5 & 0 \\\\ 0 & 5 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & 3 \\\\ 3 & 2 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 8 & 0 \\\\ 0 & 8 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Transpose dari matriks \\( \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 1 & 3 \\\\ 2 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 4 & 3 \\\\ 2 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & 1 \\\\ 4 & 3 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                    ],
+                    medium: [
+                         {
+                              question: `Invers dari matriks \\( \\begin{bmatrix} 4 & 7 \\\\ 1 & 2 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} -2 & 7 \\\\ 1 & -4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & -7 \\\\ -1 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 4 & -1 \\\\ -7 & 2 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'B',
+                         },
+                         {
+                              question: `Hasil dari \\( \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix} \\times \\begin{bmatrix} 0 & 1 \\\\ 1 & 0 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 2 & 1 \\\\ 4 & 3 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 0 & 2 \\\\ 3 & 0 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 3 & 1 \\\\ 7 & 3 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Determinan dari matriks \\( \\begin{bmatrix} 2 & 5 & 1 \\\\ 0 & 3 & 4 \\\\ 0 & 0 & 6 \\end{bmatrix} \\) adalah:`,
+                              options: ['18', '36', '6', '72'],
+                              answer: 'B',
+                         },
+                         {
+                              question: `Hasil perkalian \\( \\begin{bmatrix} 1 & 0 & 2 \\\\ -1 & 3 & 1 \\end{bmatrix} \\times \\begin{bmatrix} 2 & 1 \\\\ -1 & 1 \\\\ 3 & -2 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 8 & -3 \\\\ -2 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 5 & 2 \\\\ 1 & 3 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 7 & -4 \\\\ 0 & 2 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 6 & -1 \\\\ -1 & 5 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Jika \\( AB = \\begin{bmatrix} 5 & 2 \\\\ 3 & 1 \\end{bmatrix} \\) dan \\( B = \\begin{bmatrix} 1 & 2 \\\\ 1 & 1 \\end{bmatrix} \\), maka matriks A adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 3 & 0 \\\\ 2 & -1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & 1 \\\\ 1 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 4 & 1 \\\\ 3 & 0 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 4 \\\\ 0 & 3 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                    ],
+                    hard: [
+                         {
+                              question: `Determinan dari matriks \\( \\begin{bmatrix} 1 & 2 & 3 & 4 \\\\ 0 & 5 & 6 & 7 \\\\ 0 & 0 & 8 & 9 \\\\ 0 & 0 & 0 & 10 \\end{bmatrix} \\) adalah:`,
+                              options: ['400', '120', '240', '600'],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Invers dari matriks \\( \\begin{bmatrix} 1 & 1 & 0 \\\\ 0 & 1 & 1 \\\\ 1 & 0 & 1 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\frac{1}{2} \\begin{bmatrix} 1 & -1 & 1 \\\\ 1 & 1 & -1 \\\\ -1 & 1 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 0 & 1 \\\\ 1 & 1 & 0 \\\\ 0 & 1 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\frac{1}{3} \\begin{bmatrix} 1 & 1 & 0 \\\\ 0 & 1 & 1 \\\\ 1 & 0 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & -1 & 0 \\\\ 0 & 1 & -1 \\\\ -1 & 0 & 1 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Jika \\( A^2 = \\begin{bmatrix} 5 & 2 \\\\ 2 & 1 \\end{bmatrix} \\), maka matriks A yang mungkin adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 2 & 1 \\\\ 1 & 0 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 2 \\\\ 0 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 3 & 1 \\\\ 1 & 2 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & 0 \\\\ 0 & 1 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Hasil perkalian \\( \\begin{bmatrix} 1 & 2 & 3 & 4 \\\\ 5 & 6 & 7 & 8 \\end{bmatrix} \\times \\begin{bmatrix} 1 & 0 \\\\ 0 & 1 \\\\ 1 & 0 \\\\ 0 & 1 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 4 & 6 \\\\ 12 & 14 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 2 \\\\ 5 & 6 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 3 & 4 \\\\ 7 & 8 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 5 & 8 \\\\ 13 & 20 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Solusi sistem persamaan linear \\( \\begin{cases} 2x + 3y = 5 \\\\ 4x + 7y = 11 \\end{cases} \\) dalam bentuk matriks adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} 1 \\\\ 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} 2 \\\\ -1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} -1 \\\\ 2 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} x \\\\ y \\end{bmatrix} = \\begin{bmatrix} 1 \\\\ -1 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'B',
+                         },
+                    ],
+               };
+
+               // Variabel state quiz
+               let currentDifficulty = 'easy';
+               let currentQuestionIndex = 0;
+               let timer;
+               let timeLeft = 120; // 2 menit dalam detik
+               let userAnswers = [];
+               let shuffledQuestions = [];
+
+               // Elemen DOM
+               const startScreen = document.getElementById('startScreen');
+               const questionsWrapper =
+                    document.getElementById('questionsWrapper');
+               const questionsContainer =
+                    document.getElementById('questionsContainer');
+               const quizResult = document.getElementById('quizResult');
+               const progressBar = document.getElementById('progressBar');
+               const timerDisplay = document.getElementById('timer');
+               const startQuizBtn = document.getElementById('startQuizBtn');
+               const difficultyBtns =
+                    document.querySelectorAll('.difficulty-btn');
+
+               // Fungsi untuk mengacak array
+               function shuffleArray(array) {
+                    return array.slice().sort(() => Math.random() - 0.5);
+               }
+
+               // Fungsi untuk memformat waktu
+               function formatTime(seconds) {
+                    const mins = Math.floor(seconds / 60)
+                         .toString()
+                         .padStart(2, '0');
+                    const secs = (seconds % 60).toString().padStart(2, '0');
+                    return `${mins}:${secs}`;
+               }
+
+               // Fungsi untuk mengupdate timer
+               function updateTimer() {
+                    timerDisplay.textContent = formatTime(timeLeft);
+
+                    // Update warna timer berdasarkan sisa waktu
+                    timerDisplay.className = 'timer'; // Reset class
+                    if (timeLeft <= 30 && timeLeft > 10) {
+                         timerDisplay.classList.add('warning');
+                    } else if (timeLeft <= 10) {
+                         timerDisplay.classList.add('critical');
+                    }
+
+                    if (timeLeft <= 0) {
+                         clearInterval(timer);
+                         nextQuestion();
+                    } else {
+                         timeLeft--;
+                    }
+               }
+
+               // Fungsi untuk memulai timer
+               function startTimer() {
+                    timeLeft = 120; // Reset ke 2 menit
+                    updateTimer(); // Update tampilan segera
+                    clearInterval(timer); // Hentikan timer sebelumnya jika ada
+                    timer = setInterval(updateTimer, 1000);
+               }
+
+               // Fungsi untuk menampilkan soal
+               function showQuestion(index) {
+                    // Hentikan timer sebelumnya
+                    clearInterval(timer);
+
+                    // Sembunyikan semua soal
+                    document
+                         .querySelectorAll('.question-container')
+                         .forEach((q) => {
+                              q.classList.remove('active');
+                         });
+
+                    // Tampilkan soal yang aktif
+                    const activeQuestion = document.getElementById(
+                         `question-${index}`
+                    );
+                    if (activeQuestion) {
+                         activeQuestion.classList.add('active');
+                         startTimer(); // Mulai timer untuk soal ini
+
+                         // Update progress bar
+                         const progress =
+                              ((index + 1) / shuffledQuestions.length) * 100;
+                         progressBar.style.width = `${progress}%`;
+                    }
+               }
+
+               // Fungsi untuk membuat elemen soal
+               function createQuestionElement(question, index) {
+                    const questionElement = document.createElement('div');
+                    questionElement.className = 'question-container';
+                    questionElement.id = `question-${index}`;
+
+                    const isLastQuestion =
+                         index === shuffledQuestions.length - 1;
+
+                    questionElement.innerHTML = `
+                <div class="question-text">${index + 1}. ${
+                         question.question
+                    }</div>
+                <div class="options">
+                    ${question.options
+                         .map(
+                              (option, i) => `
+                        <label class="option">
+                            <input type="radio" name="q${index}" value="${String.fromCharCode(
+                                   65 + i
+                              )}" 
+                                   ${
+                                        userAnswers[index] ===
+                                        String.fromCharCode(65 + i)
+                                             ? 'checked'
+                                             : ''
+                                   }>
+                            <span>${String.fromCharCode(
+                                 65 + i
+                            )}. ${option}</span>
+                        </label>
+                    `
+                         )
+                         .join('')}
+                </div>
+                <div class="navigation">
+                    <button class="nav-btn ${
+                         isLastQuestion ? 'finish' : ''
+                    }" id="nextBtn">
+                        ${isLastQuestion ? 'Selesai' : 'Soal Berikutnya'}
+                    </button>
+                </div>
+            `;
+
+                    // Tambahkan event listener untuk radio buttons
+                    questionElement
+                         .querySelectorAll('input[type="radio"]')
+                         .forEach((radio) => {
+                              radio.addEventListener('change', function () {
+                                   userAnswers[index] = this.value;
+                              });
+                         });
+
+                    // Tambahkan event listener untuk tombol next
+                    const nextBtn = questionElement.querySelector('#nextBtn');
+                    nextBtn.addEventListener('click', nextQuestion);
+
+                    return questionElement;
+               }
+
+               // Fungsi untuk pindah ke soal berikutnya
+               function nextQuestion() {
+                    // Simpan jawaban jika ada yang dipilih
+                    const selectedOption = document.querySelector(
+                         `.question-container.active input[type="radio"]:checked`
+                    );
+
+                    if (selectedOption) {
+                         userAnswers[currentQuestionIndex] =
+                              selectedOption.value;
+                    } else {
+                         userAnswers[currentQuestionIndex] = null;
+                    }
+
+                    // Pindah ke soal berikutnya atau tampilkan hasil
+                    if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                         currentQuestionIndex++;
+                         showQuestion(currentQuestionIndex);
+                    } else {
+                         showResults();
+                    }
+               }
+
+               // Fungsi untuk menampilkan hasil
+               function showResults() {
+                    clearInterval(timer);
+
+                    let correctCount = 0;
+                    let resultHTML = '';
+
+                    shuffledQuestions.forEach((q, index) => {
+                         const userAnswer = userAnswers[index];
+                         const isCorrect = userAnswer === q.answer;
+
+                         if (isCorrect) correctCount++;
+
+                         resultHTML += `
+                    <div class="question-result ${
+                         isCorrect ? 'correct' : 'incorrect'
+                    }">
+                        <p><strong>Soal ${index + 1}:</strong> ${q.question}</p>
+                        <p>Jawaban Anda: ${userAnswer || 'Tidak diisi'} - ${
+                              isCorrect ? '✅ Benar' : '❌ Salah'
+                         }</p>
+                        <p>Jawaban benar: ${q.answer}</p>
+                    </div>
+                `;
+                    });
+
+                    const score = Math.round(
+                         (correctCount / shuffledQuestions.length) * 100
+                    );
+                    quizResult.innerHTML = `
+                <h3 class="result-title">Hasil Quiz</h3>
+                <div class="score">
+                    Skor Anda: <strong>${score}%</strong><br>
+                    (${correctCount} benar dari ${shuffledQuestions.length} soal)
+                </div>
+                ${resultHTML}
+            `;
+
+                    // Sembunyikan container soal dan tampilkan hasil
+                    questionsWrapper.style.display = 'none';
+                    quizResult.style.display = 'block';
+
+                    // Render MathJax untuk hasil
+                    if (window.MathJax) {
+                         MathJax.typesetPromise();
+                    }
+               }
+
+               // Fungsi untuk memulai quiz
+               function startQuiz() {
+                    // Acak urutan soal
+                    shuffledQuestions = shuffleArray(
+                         quizData[currentDifficulty]
+                    );
+
+                    // Reset state
+                    currentQuestionIndex = 0;
+                    userAnswers = new Array(shuffledQuestions.length).fill(
+                         null
+                    );
+
+                    // Kosongkan container soal
+                    questionsContainer.innerHTML = '';
+
+                    // Buat elemen untuk setiap soal
+                    shuffledQuestions.forEach((question, index) => {
+                         const questionElement = createQuestionElement(
+                              question,
+                              index
+                         );
+                         questionsContainer.appendChild(questionElement);
+                    });
+
+                    // Tampilkan layar quiz dan sembunyikan start screen
+                    startScreen.style.display = 'none';
+                    questionsWrapper.style.display = 'block';
+
+                    // Mulai timer untuk soal pertama
+                    startTimer();
+
+                    // Tampilkan soal pertama
+                    showQuestion(0);
+
+                    // Render MathJax
+                    if (window.MathJax) {
+                         MathJax.typesetPromise();
+                    }
+               }
+
+               // Event listeners
+               startQuizBtn.addEventListener('click', startQuiz);
+
+               difficultyBtns.forEach((btn) => {
+                    btn.addEventListener('click', function () {
+                         currentDifficulty = this.dataset.level;
+
+                         // Update active button
+                         difficultyBtns.forEach((b) =>
+                              b.classList.remove('active')
+                         );
+                         this.classList.add('active');
+                    });
+               });
+
+               // Inisialisasi
+               document.addEventListener('DOMContentLoaded', () => {
+                    if (window.MathJax) {
+                         MathJax.typesetPromise();
+                    }
+               });
+          </script>
+     </body>
+</html>
