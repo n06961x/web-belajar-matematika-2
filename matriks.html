@@ -7,6 +7,7 @@
                content="width=device-width, initial-scale=1.0"
           />
           <title>Bahan Ajar Matriks Kelas XI</title>
+
           <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
           <script
                id="MathJax-script"
@@ -57,6 +58,22 @@
                     padding: 10px;
                     border-radius: 5px;
                     margin-top: 20px;
+               }
+               .tombol {
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
+                    margin: 20px 0;
+                    font-family: 'Arial', sans-serif;
+                    position: relative;
+                    padding: 8px 20px;
+                    font-weight: bold;
+
+                    text-align: center;
+                    border-radius: 4px;
+                    background-color: #503df8;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    border-radius: 2rem;
                }
           </style>
      </head>
@@ -199,7 +216,117 @@
                \begin{pmatrix} 19 & 22 \\ 43 & 50 \end{pmatrix} \]
           </div>
 
-          <h2>D. Determinan & Invers Matriks</h2>
+          <h2>D. Transpose Matriks</h2>
+          <p>
+               <strong>Transpose matriks</strong> adalah operasi yang mengubah
+               baris menjadi kolom dan kolom menjadi baris dari suatu matriks.
+               Transpose dari matriks \( A \) dinotasikan dengan \( A^T \) atau
+               \( A' \).
+          </p>
+
+          <div class="example">
+               <p><strong>Definisi:</strong></p>
+               <p>
+                    Jika \( A \) adalah matriks berordo \( m \times n \), maka
+                    transpose \( A^T \) akan berordo \( n \times m \) dengan:
+               </p>
+               \[ (A^T)_{ij} = A_{ji} \]
+               <p>
+                    Artinya, elemen pada baris ke-i dan kolom ke-j dari \( A^T
+                    \) sama dengan elemen pada baris ke-j dan kolom ke-i dari \(
+                    A \).
+               </p>
+          </div>
+
+          <div class="example">
+               <p><strong>Contoh:</strong></p>
+               <p>
+                    1. Jika \( A = \begin{pmatrix} 1 & 2 & 3 \\ 4 & 5 & 6
+                    \end{pmatrix} \) (ordo \( 2 \times 3 \))
+               </p>
+               <p>
+                    Maka \( A^T = \begin{pmatrix} 1 & 4 \\ 2 & 5 \\ 3 & 6
+                    \end{pmatrix} \) (ordo \( 3 \times 2 \))
+               </p>
+
+               <p>
+                    2. Jika \( B = \begin{pmatrix} 2 & -1 \\ 0 & 3 \\ 5 & 4
+                    \end{pmatrix} \)
+               </p>
+               <p>
+                    Maka \( B^T = \begin{pmatrix} 2 & 0 & 5 \\ -1 & 3 & 4
+                    \end{pmatrix} \)
+               </p>
+          </div>
+
+          <h3>Sifat-Sifat Transpose Matriks</h3>
+          <ol>
+               <li>\( (A^T)^T = A \)</li>
+               <li>\( (A + B)^T = A^T + B^T \)</li>
+               <li>\( (kA)^T = kA^T \) (untuk skalar \( k \))</li>
+               <li>\( (AB)^T = B^T A^T \)</li>
+               <li>
+                    Jika \( A \) matriks persegi, maka:
+                    <ul>
+                         <li>\( \det(A^T) = \det(A) \)</li>
+                         <li>
+                              \( (A^{-1})^T = (A^T)^{-1} \) (jika \( A \)
+                              invertible)
+                         </li>
+                    </ul>
+               </li>
+          </ol>
+
+          <div class="example">
+               <p><strong>Contoh Penerapan:</strong></p>
+               <p>
+                    Diketahui \( A = \begin{pmatrix} 1 & 2 \\ 3 & 4
+                    \end{pmatrix} \) dan \( B = \begin{pmatrix} 0 & 1 \\ -1 & 2
+                    \end{pmatrix} \), buktikan bahwa \( (AB)^T = B^T A^T \).
+               </p>
+               <p><strong>Penyelesaian:</strong></p>
+               <p>1. Hitung \( AB \):</p>
+               \[ AB = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}
+               \begin{pmatrix} 0 & 1 \\ -1 & 2 \end{pmatrix} = \begin{pmatrix}
+               -2 & 5 \\ -4 & 11 \end{pmatrix} \]
+               <p>
+                    Maka \( (AB)^T = \begin{pmatrix} -2 & -4 \\ 5 & 11
+                    \end{pmatrix} \)
+               </p>
+
+               <p>2. Hitung \( B^T A^T \):</p>
+               \[ B^T = \begin{pmatrix} 0 & -1 \\ 1 & 2 \end{pmatrix}, \quad A^T
+               = \begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix} \] \[ B^T A^T =
+               \begin{pmatrix} 0 & -1 \\ 1 & 2 \end{pmatrix} \begin{pmatrix} 1 &
+               3 \\ 2 & 4 \end{pmatrix} = \begin{pmatrix} -2 & -4 \\ 5 & 11
+               \end{pmatrix} \]
+               <p>Terbukti bahwa \( (AB)^T = B^T A^T \).</p>
+          </div>
+
+          <div class="exercise">
+               <p><strong>Latihan:</strong></p>
+               <div class="question">
+                    <p>
+                         1. Tentukan transpose dari matriks \( \begin{pmatrix} 5
+                         & 0 & 1 \\ 2 & 3 & 4 \end{pmatrix} \).
+                    </p>
+               </div>
+               <div class="question">
+                    <p>
+                         2. Jika \( C = \begin{pmatrix} 1 & -1 \\ 2 & 0 \\ 3 & 5
+                         \end{pmatrix} \), tentukan \( C^T \).
+                    </p>
+               </div>
+               <div class="question">
+                    <p>
+                         3. Diketahui \( D = \begin{pmatrix} 2 & 1 \\ 0 & 3
+                         \end{pmatrix} \), buktikan bahwa \( (D^T)^{-1} =
+                         (D^{-1})^T \).
+                    </p>
+               </div>
+          </div>
+
+          <h2>E. Determinan & Invers Matriks</h2>
 
           <h3>1. Determinan Matriks \( 2 \times 2 \)</h3>
           \[ A = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \Rightarrow
@@ -223,7 +350,7 @@
                \end{pmatrix} \]
           </div>
 
-          <h2>E. Latihan Soal (Pilihan Ganda)</h2>
+          <h2>F. Latihan Soal (Pilihan Ganda)</h2>
 
           <div class="exercise">
                <p><strong>Pilihlah jawaban yang benar!</strong></p>
@@ -404,9 +531,55 @@
                     <p>D. Identitas</p>
                     <p>E. Diagonal</p>
                </div>
+               <div class="question">
+                    <p>
+                         11. Transpose dari matriks \( \begin{pmatrix} 2 & 0 & 1
+                         \\ 3 & -1 & 4 \end{pmatrix} \) adalah...
+                    </p>
+                    <p>
+                         A. \( \begin{pmatrix} 2 & 3 \\ 0 & -1 \\ 1 & 4
+                         \end{pmatrix} \)
+                    </p>
+                    <p>
+                         B. \( \begin{pmatrix} 2 & 0 & 1 \\ 3 & -1 & 4
+                         \end{pmatrix} \)
+                    </p>
+                    <p>
+                         C. \( \begin{pmatrix} 3 & 2 \\ -1 & 0 \\ 4 & 1
+                         \end{pmatrix} \)
+                    </p>
+                    <p>
+                         D. \( \begin{pmatrix} 0 & 2 \\ -1 & 3 \\ 4 & 1
+                         \end{pmatrix} \)
+                    </p>
+                    <p>
+                         E. \( \begin{pmatrix} 1 & 4 \\ 0 & -1 \\ 2 & 3
+                         \end{pmatrix} \)
+                    </p>
+               </div>
+
+               <div class="question">
+                    <p>
+                         12. Jika \( (A^T)^T = \begin{pmatrix} 1 & 3 \\ 2 & 4
+                         \end{pmatrix} \), maka matriks \( A \) adalah...
+                    </p>
+                    <p>A. \( \begin{pmatrix} 4 & 2 \\ 3 & 1 \end{pmatrix} \)</p>
+                    <p>B. \( \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \)</p>
+                    <p>C. \( \begin{pmatrix} 1 & 3 \\ 2 & 4 \end{pmatrix} \)</p>
+                    <p>D. \( \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \)</p>
+                    <p>E. \( \begin{pmatrix} 4 & 3 \\ 2 & 1 \end{pmatrix} \)</p>
+               </div>
+          </div>
+          <div class="tombol">
+               <a
+                    href="./quiz/matriks/quiz1.html"
+                    style="color: white; text-decoration: none"
+                    >Siap Kerjakan Quiz</a
+               >
           </div>
 
           <h3>Referensi:</h3>
+
           <ul>
                <li>Buku Matematika Kelas XI Kurikulum Merdeka.</li>
                <li>Modul Pengayaan Matriks.</li>

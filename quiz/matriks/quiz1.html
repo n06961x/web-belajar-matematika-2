@@ -283,6 +283,29 @@
                          width: 80%;
                     }
                }
+               /* Style untuk tombol refresh */
+               .refresh-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px 20px;
+                    background-color: #4caf50;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: background-color 0.3s;
+               }
+
+               .refresh-btn:hover {
+                    background-color: #45a049;
+               }
+
+               .refresh-icon {
+                    margin-right: 8px;
+                    font-size: 18px;
+               }
           </style>
      </head>
      <body>
@@ -486,6 +509,47 @@
                               ],
                               answer: 'B',
                          },
+                         {
+                              question: `Transpose dari matriks \\( A = \\begin{bmatrix} 2 & 0 & 1 \\\\ 3 & -1 & 4 \\end{bmatrix} \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 2 & 3 \\\\ 0 & -1 \\\\ 1 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 2 & 0 & 1 \\\\ 3 & -1 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 3 & 2 \\\\ -1 & 0 \\\\ 4 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 0 & 2 \\\\ -1 & 3 \\\\ 4 & 1 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Jika \\( B = \\begin{bmatrix} 1 & -2 \\\\ 3 & 0 \\\\ 5 & 4 \\end{bmatrix} \\), maka \\( B^T \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 1 & 3 & 5 \\\\ -2 & 0 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} -2 & 0 & 4 \\\\ 1 & 3 & 5 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & -2 \\\\ 3 & 0 \\\\ 5 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 5 & 3 & 1 \\\\ 4 & 0 & -2 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'A',
+                         },
+                         {
+                              question: `Sifat transpose yang BENAR untuk matriks persegi \\( A \\) dan \\( B \\) adalah:`,
+                              options: [
+                                   `\\( (A + B)^T = A^T + B^T \\)`,
+                                   `\\( (AB)^T = A^T B^T \\)`,
+                                   `\\( (A^T)^T \\neq A \\)`,
+                                   `\\( (A^{-1})^T = (A^T)^{-1} \\) hanya jika A matriks diagonal`,
+                              ],
+                              answer: 'A',
+                         },
+
+                         {
+                              question: `Diketahui \\( (D^T)^T = \\begin{bmatrix} 1 & 3 \\\\ 2 & 4 \\end{bmatrix} \\), maka matriks \\( D \\) adalah:`,
+                              options: [
+                                   `\\( \\begin{bmatrix} 4 & 2 \\\\ 3 & 1 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 1 & 3 \\\\ 2 & 4 \\end{bmatrix} \\)`,
+                                   `\\( \\begin{bmatrix} 0 & 0 \\\\ 0 & 0 \\end{bmatrix} \\)`,
+                              ],
+                              answer: 'C',
+                         },
                     ],
                };
 
@@ -621,6 +685,7 @@
                         ${isLastQuestion ? 'Selesai' : 'Soal Berikutnya'}
                     </button>
                 </div>
+                
             `;
 
                     // Tambahkan event listener untuk radio buttons
@@ -683,6 +748,11 @@
                         <p>Jawaban Anda: ${userAnswer || 'Tidak diisi'} - ${
                               isCorrect ? '✅ Benar' : '❌ Salah'
                          }</p>
+                           <!-- Tombol Refresh dengan icon -->
+          <button class="refresh-btn" onclick="window.location.reload()">
+               <span class="refresh-icon">↻</span>
+               Refresh Halaman
+          </button>
                       
                     </div>
                 `;
@@ -772,6 +842,31 @@
                          MathJax.typesetPromise();
                     }
                });
+
+               // Script untuk animasi tombol refresh
+               document
+                    .getElementById('animatedRefresh')
+                    .addEventListener('click', function () {
+                         this.disabled = true;
+                         this.querySelector('.refresh-icon').style.animation =
+                              'spin 0.5s linear';
+
+                         setTimeout(() => {
+                              window.location.reload();
+                         }, 500);
+                    });
+
+               // Tambahkan style animasi
+               const style = document.createElement('style');
+               style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+               document.head.appendChild(style);
           </script>
+
+          <!-- Versi alternatif dengan animasi -->
      </body>
 </html>
