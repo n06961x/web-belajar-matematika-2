@@ -18,6 +18,41 @@
                href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
                rel="stylesheet"
           />
+          <style>
+               /* Transisi untuk konten utama */
+               .content-transition {
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+               }
+               
+               /* State awal sebelum transisi masuk */
+               .content-enter {
+                    opacity: 0;
+                    transform: translateY(20px);
+               }
+               
+               /* State akhir transisi masuk */
+               .content-enter-active {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+               
+               /* State awal transisi keluar */
+               .content-exit {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+               
+               /* State akhir transisi keluar */
+               .content-exit-active {
+                    opacity: 0;
+                    transform: translateY(-20px);
+               }
+               
+               /* Untuk navbar tetap stabil selama transisi */
+               nav {
+                    transition: none !important;
+               }
+          </style>
           <script>
                tailwind.config = {
                     theme: {
@@ -138,7 +173,7 @@
 
           <!-- Konten Utama -->
           <main
-               class="min-h-screen pt-16 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+               class="min-h-screen pt-16 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 content-transition"
           >
           <section id="bahan-ajar" class="content-section mt-20">
                  
@@ -499,14 +534,10 @@
                                         </div>
                                    </div>
                               </div>
-
-                              
                          </div>
                     </div>
                </section>
           </main>
-
-       
 
           <!-- Footer -->
           <footer class="bg-gray-800 text-white py-8">
@@ -594,5 +625,53 @@
                     </div>
                </div>
           </footer>
+          
+          <script>
+               // Fungsi untuk menangani navigasi dengan transisi
+               function handleNavigation(event) {
+                    // Cek jika link mengarah ke halaman eksternal atau anchor
+                    if (event.target.hostname !== window.location.hostname || 
+                        event.target.hash || 
+                        event.target.getAttribute('target') === '_blank') {
+                         return;
+                    }
+                    
+                    event.preventDefault();
+                    const href = event.target.getAttribute('href');
+                    
+                    // Jika link sama dengan halaman saat ini, abaikan
+                    if (href === window.location.pathname) return;
+                    
+                    // Mulai transisi keluar
+                    const mainContent = document.querySelector('main');
+                    mainContent.classList.add('content-exit', 'content-exit-active');
+                    
+                    setTimeout(() => {
+                         // Pindah ke halaman baru setelah transisi keluar selesai
+                         window.location.href = href;
+                    }, 500);
+               }
+
+               // Terapkan event listener ke semua link navigasi
+               document.querySelectorAll('nav a').forEach(link => {
+                    link.addEventListener('click', handleNavigation);
+               });
+
+               // Jalankan transisi masuk saat halaman dimuat
+               document.addEventListener('DOMContentLoaded', () => {
+                    const mainContent = document.querySelector('main');
+                    mainContent.classList.add('content-transition', 'content-enter');
+                    
+                    // Trigger reflow untuk memastikan animasi berjalan
+                    void mainContent.offsetWidth;
+                    
+                    mainContent.classList.add('content-enter-active');
+                    
+                    // Hapus class setelah transisi selesai
+                    setTimeout(() => {
+                         mainContent.classList.remove('content-enter', 'content-enter-active');
+                    }, 500);
+               });
+          </script>
      </body>
 </html>
