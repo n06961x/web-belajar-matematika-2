@@ -58,28 +58,28 @@
                          >
                               <a
                                    href="#"
-                                   class="text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                                   class="text-gray-600 px-3 py-2 rounded-md text-sm font-medium"
                                    id="beranda-link"
                               >
                                    <i class="fas fa-home mr-1"></i> Beranda
                               </a>
                               <a
-                                   href="#"
+                                   href="./Bahanajar.html"
                                    class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
                                    id="bahan-ajar-link"
                               >
                                    <i class="fas fa-book mr-1"></i> Bahan Ajar
                               </a>
                               <a
-                                   href="#"
-                                   class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
+                                   href="Quiz.html"
+                                   class="text-indigo-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
                                    id="quiz-link"
                               >
                                    <i class="fas fa-question-circle mr-1"></i>
                                    Quiz
                               </a>
                               <a
-                                   href="#"
+                                   href="./tentangkami.html"
                                    class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium"
                                    id="tentang-link"
                               >
@@ -106,14 +106,14 @@
                     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white">
                          <a
                               href="#"
-                              class="text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                              class="text-gray-600 block px-3 py-2 rounded-md text-base font-medium"
                               id="mobile-beranda-link"
                          >
                               <i class="fas fa-home mr-1"></i> Beranda
                          </a>
                          <a
                               href="#"
-                              class="text-gray-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                              class="text-indigo-600 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
                               id="mobile-bahan-ajar-link"
                          >
                               <i class="fas fa-book mr-1"></i> Bahan Ajar
@@ -136,103 +136,111 @@
                </div>
           </nav>
 
-          <!-- Bahan Ajar -->
-          <section id="bahan-ajar" class="content-section">
-               <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                    Bahan Ajar Matematika SMA
-               </h1>
-               <div
-                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
-               >
-                    <div
-                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                         onclick="loadMateri('aljabar')"
+          <!-- Konten Utama -->
+          <main
+               class="min-h-screen pt-16 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          >
+               <!-- Quiz -->
+               <section id="quiz" class="content-section mt-20">
+                    <h1
+                         class="text-3xl font-bold text-gray-900 mb-8 text-center"
                     >
-                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
-                              Aljabar
-                         </h3>
+                         Latihan Soal Matematika
+                    </h1>
+                    <div
+                         class="bg-white p-6 rounded-lg shadow-md mb-8 text-center"
+                    >
                          <p class="text-gray-600 mb-4">
-                              Persamaan, pertidaksamaan, fungsi, dan matriks
+                              Pilih tingkat kesulitan soal yang ingin Anda
+                              kerjakan:
                          </p>
-                         <div
-                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
-                         >
-                              <div
-                                   class="bg-indigo-600 h-2.5 rounded-full"
-                                   style="width: 75%"
-                              ></div>
+                         <div class="flex justify-center gap-4">
+                              <button
+                                   class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-300"
+                                   data-level="mudah"
+                              >
+                                   Mudah
+                              </button>
+                              <button
+                                   class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-300"
+                                   data-level="sedang"
+                              >
+                                   Sedang
+                              </button>
+                              <button
+                                   class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-300"
+                                   data-level="sulit"
+                              >
+                                   Sulit
+                              </button>
                          </div>
-                         <span class="text-sm text-gray-500">75% selesai</span>
                     </div>
                     <div
-                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                         onclick="loadMateri('geometri')"
+                         id="quiz-container"
+                         class="bg-white p-6 rounded-lg shadow-md"
                     >
-                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
-                              Geometri
-                         </h3>
-                         <p class="text-gray-600 mb-4">
-                              Bangun ruang, trigonometri, dan transformasi
-                              geometri
-                         </p>
-                         <div
-                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
-                         >
-                              <div
-                                   class="bg-indigo-600 h-2.5 rounded-full"
-                                   style="width: 60%"
-                              ></div>
-                         </div>
-                         <span class="text-sm text-gray-500">60% selesai</span>
+                         <!-- Soal quiz akan dimuat di sini -->
                     </div>
                     <div
-                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                         onclick="loadMateri('kalkulus')"
+                         id="quiz-result"
+                         class="bg-white p-6 rounded-lg shadow-md mt-6 hidden"
                     >
-                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
-                              Kalkulus
-                         </h3>
-                         <p class="text-gray-600 mb-4">
-                              Limit, turunan, dan integral
-                         </p>
-                         <div
-                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
-                         >
-                              <div
-                                   class="bg-indigo-600 h-2.5 rounded-full"
-                                   style="width: 45%"
-                              ></div>
-                         </div>
-                         <span class="text-sm text-gray-500">45% selesai</span>
+                         <!-- Hasil quiz akan ditampilkan di sini -->
                     </div>
-                    <div
-                         class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
-                         onclick="loadMateri('statistik')"
+               </section>
+
+               <!-- Tentang -->
+               <section id="tentang" class="content-section hidden mt-20">
+                    <h1
+                         class="text-3xl font-bold text-gray-900 mb-8 text-center"
                     >
-                         <h3 class="text-xl font-semibold mb-2 text-gray-800">
-                              Statistika & Probabilitas
-                         </h3>
-                         <p class="text-gray-600 mb-4">
-                              Data, peluang, dan distribusi
-                         </p>
-                         <div
-                              class="w-full bg-gray-200 rounded-full h-2.5 mb-2"
-                         >
-                              <div
-                                   class="bg-indigo-600 h-2.5 rounded-full"
-                                   style="width: 30%"
-                              ></div>
+                         Tentang Kami
+                    </h1>
+                    <div class="flex flex-col md:flex-row gap-8">
+                         <div class="md:w-1/2">
+                              <p class="text-gray-600 mb-4">
+                                   Website ini dikembangkan oleh Guru Matematika
+                                   SMA Unggul Islam Al-Fahd untuk membantu siswa
+                                   dalam memahami konsep matematika dengan lebih
+                                   mudah dan menyenangkan.
+                              </p>
+                              <p class="text-gray-600 mb-6">
+                                   Kami berkomitmen untuk menyediakan materi
+                                   pembelajaran yang berkualitas dan sesuai
+                                   dengan kurikulum terbaru.
+                              </p>
+                              <h3
+                                   class="text-xl font-semibold mb-4 text-gray-800"
+                              >
+                                   Fitur Utama:
+                              </h3>
+                              <ul
+                                   class="list-disc pl-5 space-y-2 text-gray-600"
+                              >
+                                   <li>
+                                        Materi pembelajaran lengkap untuk kelas
+                                        X, XI, dan XII
+                                   </li>
+                                   <li>
+                                        Latihan soal dengan berbagai tingkat
+                                        kesulitan
+                                   </li>
+                                   <li>
+                                        Pembahasan soal yang detail dan mudah
+                                        dipahami
+                                   </li>
+                              </ul>
                          </div>
-                         <span class="text-sm text-gray-500">30% selesai</span>
+                         <div class="md:w-1/2">
+                              <img
+                                   src="./tentang.jpeg"
+                                   alt="Guru Matematika"
+                                   class="rounded-lg shadow-md w-full h-auto object-cover"
+                              />
+                         </div>
                     </div>
-               </div>
-               <div
-                    id="materi-detail"
-                    class="bg-white p-6 rounded-lg shadow-md"
-               >
-                    <!-- Konten materi akan dimuat di sini -->
-               </div>
-          </section>
+               </section>
+          </main>
 
           <!-- Footer -->
           <footer class="bg-gray-800 text-white py-8">
@@ -320,135 +328,5 @@
                     </div>
                </div>
           </footer>
-
-          <script>
-               // Mobile menu toggle
-               const mobileMenuButton =
-                    document.getElementById('mobile-menu-button');
-               const mobileMenu = document.getElementById('mobile-menu');
-
-               mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-               });
-
-               // Function to handle navigation
-               function navigateToSection(sectionId) {
-                    // Hide all sections
-                    document
-                         .querySelectorAll('.content-section')
-                         .forEach((section) => {
-                              section.classList.add('hidden');
-                         });
-
-                    // Show selected section
-                    document
-                         .getElementById(sectionId)
-                         .classList.remove('hidden');
-
-                    // Close mobile menu if open
-                    mobileMenu.classList.add('hidden');
-               }
-
-               // Set up event listeners for desktop nav links
-               document
-                    .querySelectorAll('nav a[id$="-link"]')
-                    .forEach((link) => {
-                         link.addEventListener('click', function (e) {
-                              e.preventDefault();
-                              const sectionId = this.id.replace('-link', '');
-                              navigateToSection(sectionId);
-
-                              // Update active state
-                              document
-                                   .querySelectorAll('nav a')
-                                   .forEach((navLink) => {
-                                        navLink.classList.remove(
-                                             'text-indigo-600'
-                                        );
-                                        navLink.classList.add(
-                                             'text-gray-600',
-                                             'hover:text-indigo-600'
-                                        );
-                                   });
-                              this.classList.remove(
-                                   'text-gray-600',
-                                   'hover:text-indigo-600'
-                              );
-                              this.classList.add('text-indigo-600');
-                         });
-                    });
-
-               // Set up event listeners for mobile nav links
-               document
-                    .querySelectorAll('#mobile-menu a[id^="mobile-"]')
-                    .forEach((link) => {
-                         link.addEventListener('click', function (e) {
-                              e.preventDefault();
-                              const sectionId = this.id
-                                   .replace('mobile-', '')
-                                   .replace('-link', '');
-                              navigateToSection(sectionId);
-
-                              // Update active state for both mobile and desktop
-                              document
-                                   .querySelectorAll('nav a, #mobile-menu a')
-                                   .forEach((navLink) => {
-                                        navLink.classList.remove(
-                                             'text-indigo-600'
-                                        );
-                                        navLink.classList.add(
-                                             'text-gray-600',
-                                             'hover:text-indigo-600'
-                                        );
-                                   });
-
-                              // Update clicked link
-                              this.classList.remove(
-                                   'text-gray-600',
-                                   'hover:text-indigo-600'
-                              );
-                              this.classList.add('text-indigo-600');
-
-                              // Also update corresponding desktop link
-                              const desktopLink = document.getElementById(
-                                   `${sectionId}-link`
-                              );
-                              if (desktopLink) {
-                                   desktopLink.classList.remove(
-                                        'text-gray-600',
-                                        'hover:text-indigo-600'
-                                   );
-                                   desktopLink.classList.add('text-indigo-600');
-                              }
-                         });
-                    });
-
-               // Set Beranda as active by default
-               document
-                    .getElementById('beranda-link')
-                    .classList.add('text-indigo-600');
-               document
-                    .getElementById('beranda-link')
-                    .classList.remove('text-gray-600', 'hover:text-indigo-600');
-               document
-                    .getElementById('mobile-beranda-link')
-                    .classList.add('text-indigo-600');
-               document
-                    .getElementById('mobile-beranda-link')
-                    .classList.remove('text-gray-600', 'hover:text-indigo-600');
-               document.getElementById('beranda').classList.remove('hidden');
-
-               // Placeholder for loadMateri function
-               function loadMateri(topic) {
-                    const detailSection =
-                         document.getElementById('materi-detail');
-                    detailSection.innerHTML = `
-                <h2 class="text-2xl font-bold mb-4 text-gray-800">${
-                     topic.charAt(0).toUpperCase() + topic.slice(1)
-                }</h2>
-                <p class="text-gray-600">Detail materi ${topic} akan ditampilkan di sini.</p>
-            `;
-               }
-          </script>
      </body>
 </html>
