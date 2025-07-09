@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Kuis Numerasi ANBK: Barisan dan Deret</title>
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+               }
+               body {
+                    background: linear-gradient(
+                         135deg,
+                         #1a2a6c,
+                         #b21f1f,
+                         #fdbb2d
+                    );
+                    color: #333;
+                    line-height: 1.6;
+                    padding: 20px;
+                    min-height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+               }
+               .container {
+                    max-width: 800px;
+                    width: 100%;
+                    background: rgba(255, 255, 255, 0.95);
+                    border-radius: 15px;
+                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                    overflow: hidden;
+               }
+               header {
+                    background: linear-gradient(to right, #1e3c72, #2a5298);
+                    color: white;
+                    padding: 25px 30px;
+                    text-align: center;
+                    position: relative;
+               }
+               .logo-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-bottom: 15px;
+               }
+               .logo {
+                    width: 60px;
+                    height: 60px;
+                    background: #ff9d00;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-right: 15px;
+                    box-shadow: 0 0 15px rgba(255, 157, 0, 0.7);
+               }
+               h1 {
+                    font-size: 1.8rem;
+                    margin-bottom: 10px;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+               }
+               .progress-container {
+                    width: 100%;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 10px;
+                    margin-top: 15px;
+                    height: 12px;
+               }
+               .progress-bar {
+                    height: 100%;
+                    background: #ff9d00;
+                    border-radius: 10px;
+                    width: 20%; /* Awalnya 20% untuk soal pertama */
+                    transition: width 0.5s ease;
+               }
+               .quiz-info {
+                    display: flex;
+                    justify-content: space-between;
+                    font-size: 0.9rem;
+                    margin-top: 10px;
+                    padding: 0 5px;
+               }
+               .main-content {
+                    padding: 30px;
+                    min-height: 400px;
+                    position: relative;
+               }
+               .question-container {
+                    display: none;
+                    animation: fadeIn 0.5s ease;
+               }
+               .question-container.active {
+                    display: block;
+               }
+               .question {
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 25px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+                    border: 1px solid #e0e0e0;
+                    position: relative;
+                    overflow: hidden;
+                    border-left: 5px solid #2a5298;
+               }
+               .question-number {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    background: #2a5298;
+                    color: white;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                    border-radius: 0 0 10px 0;
+               }
+               .question-text {
+                    margin-left: 45px;
+                    margin-bottom: 20px;
+                    font-size: 1.1rem;
+                    line-height: 1.7;
+               }
+               .options {
+                    margin-left: 45px;
+               }
+               .option {
+                    display: flex;
+                    align-items: flex-start;
+                    margin-bottom: 15px;
+                    padding: 12px 15px;
+                    border-radius: 8px;
+                    background: white;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    border: 2px solid #e0e0e0;
+               }
+               .option:hover {
+                    background: #f0f7ff;
+                    border-color: #a0c8ff;
+               }
+               .option input {
+                    margin-right: 15px;
+                    margin-top: 5px;
+                    cursor: pointer;
+               }
+               .option label {
+                    flex: 1;
+                    cursor: pointer;
+                    font-size: 1rem;
+               }
+               .math {
+                    font-size: 1.1rem;
+                    margin: 10px 0;
+                    padding: 10px;
+                    background: #f8f9fa;
+                    border-radius: 5px;
+                    border: 1px solid #e0e0e0;
+                    text-align: center;
+               }
+               .navigation {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 20px;
+               }
+               .nav-btn {
+                    background: #2a5298;
+                    color: white;
+                    padding: 12px 25px;
+                    border-radius: 50px;
+                    text-decoration: none;
+                    font-weight: bold;
+                    transition: all 0.3s ease;
+                    border: none;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                    display: flex;
+                    align-items: center;
+               }
+               .nav-btn:hover {
+                    background: #1e3c72;
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+               }
+               .nav-btn.next {
+                    background: #ff9d00;
+               }
+               .nav-btn.next:hover {
+                    background: #ff8c00;
+               }
+               .nav-btn:disabled {
+                    background: #cccccc;
+                    cursor: not-allowed;
+                    transform: none;
+                    box-shadow: none;
+               }
+               .result {
+                    text-align: center;
+                    padding: 30px;
+                    display: none;
+                    animation: fadeIn 0.8s ease;
+               }
+               .score {
+                    font-size: 3rem;
+                    font-weight: bold;
+                    color: #1e3c72;
+                    margin-bottom: 20px;
+               }
+               .feedback {
+                    font-size: 1.2rem;
+                    margin-bottom: 20px;
+               }
+               .correct-answers {
+                    text-align: left;
+                    margin-top: 30px;
+                    padding-top: 20px;
+               }
+               .answer-item {
+                    margin-bottom: 15px;
+                    padding: 15px;
+                    background: white;
+                    border-radius: 8px;
+                    border-left: 4px solid #4caf50;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+               }
+               .answer-item.wrong {
+                    border-left: 4px solid #f44336;
+               }
+               .answer-item h4 {
+                    margin-bottom: 10px;
+                    color: #1e3c72;
+               }
+               .explanation {
+                    font-size: 0.95rem;
+               }
+               footer {
+                    background: #1a1a2e;
+                    color: white;
+                    text-align: center;
+                    padding: 20px;
+                    font-size: 0.9rem;
+               }
+               @keyframes fadeIn {
+                    from {
+                         opacity: 0;
+                         transform: translateY(20px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+               @media (max-width: 768px) {
+                    header {
+                         padding: 20px 15px;
+                    }
+                    h1 {
+                         font-size: 1.5rem;
+                    }
+                    .main-content {
+                         padding: 20px 15px;
+                    }
+                    .question {
+                         padding: 20px 15px;
+                    }
+                    .question-text,
+                    .options {
+                         margin-left: 0;
+                         padding-top: 10px;
+                    }
+                    .nav-btn {
+                         padding: 10px 20px;
+                         font-size: 0.9rem;
+                    }
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <header>
+                    <div class="logo-container">
+                         <div class="logo">?</div>
+                         <div>
+                              <h1>Kuis Numerasi ANBK: Barisan dan Deret</h1>
+                              <div class="progress-container">
+                                   <div
+                                        class="progress-bar"
+                                        id="progress-bar"
+                                   ></div>
+                              </div>
+                              <div class="quiz-info">
+                                   <span id="current-question"
+                                        >Soal 1 dari 5</span
+                                   >
+                                   <span id="timer">⏱️ 15:00</span>
+                              </div>
+                         </div>
+                    </div>
+               </header>
+               <main class="main-content">
+                    <!-- Soal 1 -->
+                    <div class="question-container active" id="question-1">
+                         <div class="question">
+                              <div class="question-number">1</div>
+                              <div class="question-text">
+                                   <p>
+                                        Diketahui barisan aritmatika dengan suku
+                                        pertama \( a = 3 \) dan beda \( b = 4
+                                        \). Suku ke-10 dari barisan tersebut
+                                        adalah...
+                                   </p>
+                              </div>
+                              <div class="options">
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q1"
+                                             id="q1a"
+                                             value="a"
+                                        />
+                                        <label for="q1a">A. 39</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q1"
+                                             id="q1b"
+                                             value="b"
+                                        />
+                                        <label for="q1b">B. 41</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q1"
+                                             id="q1c"
+                                             value="c"
+                                        />
+                                        <label for="q1c">C. 43</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q1"
+                                             id="q1d"
+                                             value="d"
+                                        />
+                                        <label for="q1d">D. 45</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q1"
+                                             id="q1e"
+                                             value="e"
+                                        />
+                                        <label for="q1e">E. 47</label>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="navigation">
+                              <button class="nav-btn prev" disabled>
+                                   ← Sebelumnya
+                              </button>
+                              <button
+                                   class="nav-btn next"
+                                   onclick="showQuestion(2)"
+                              >
+                                   Berikutnya →
+                              </button>
+                         </div>
+                    </div>
+                    <!-- Soal 2 -->
+                    <div class="question-container" id="question-2">
+                         <div class="question">
+                              <div class="question-number">2</div>
+                              <div class="question-text">
+                                   <p>
+                                        Sebuah deret aritmatika memiliki suku
+                                        pertama 5 dan suku terakhir 23. Jika
+                                        jumlah suku deret tersebut adalah 154,
+                                        maka jumlah suku deret tersebut
+                                        adalah...
+                                   </p>
+                              </div>
+                              <div class="options">
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q2"
+                                             id="q2a"
+                                             value="a"
+                                        />
+                                        <label for="q2a">A. 7</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q2"
+                                             id="q2b"
+                                             value="b"
+                                        />
+                                        <label for="q2b">B. 8</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q2"
+                                             id="q2c"
+                                             value="c"
+                                        />
+                                        <label for="q2c">C. 9</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q2"
+                                             id="q2d"
+                                             value="d"
+                                        />
+                                        <label for="q2d">D. 10</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q2"
+                                             id="q2e"
+                                             value="e"
+                                        />
+                                        <label for="q2e">E. 11</label>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="navigation">
+                              <button
+                                   class="nav-btn prev"
+                                   onclick="showQuestion(1)"
+                              >
+                                   ← Sebelumnya
+                              </button>
+                              <button
+                                   class="nav-btn next"
+                                   onclick="showQuestion(3)"
+                              >
+                                   Berikutnya →
+                              </button>
+                         </div>
+                    </div>
+                    <!-- Soal 3 -->
+                    <div class="question-container" id="question-3">
+                         <div class="question">
+                              <div class="question-number">3</div>
+                              <div class="question-text">
+                                   <p>
+                                        Sebuah deret geometri memiliki suku
+                                        pertama \( a = 2 \) dan rasio \( r =
+                                        \frac{1}{2} \). Jumlah deret tak hingga
+                                        adalah...
+                                   </p>
+                              </div>
+                              <div class="options">
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q3"
+                                             id="q3a"
+                                             value="a"
+                                        />
+                                        <label for="q3a">A. 1</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q3"
+                                             id="q3b"
+                                             value="b"
+                                        />
+                                        <label for="q3b">B. 2</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q3"
+                                             id="q3c"
+                                             value="c"
+                                        />
+                                        <label for="q3c">C. 3</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q3"
+                                             id="q3d"
+                                             value="d"
+                                        />
+                                        <label for="q3d">D. 4</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q3"
+                                             id="q3e"
+                                             value="e"
+                                        />
+                                        <label for="q3e">E. 5</label>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="navigation">
+                              <button
+                                   class="nav-btn prev"
+                                   onclick="showQuestion(2)"
+                              >
+                                   ← Sebelumnya
+                              </button>
+                              <button
+                                   class="nav-btn next"
+                                   onclick="showQuestion(4)"
+                              >
+                                   Berikutnya →
+                              </button>
+                         </div>
+                    </div>
+                    <!-- Soal 4 -->
+                    <div class="question-container" id="question-4">
+                         <div class="question">
+                              <div class="question-number">4</div>
+                              <div class="question-text">
+                                   <p>
+                                        Sebuah bola dijatuhkan dari ketinggian
+                                        20 meter. Setiap kali menyentuh tanah,
+                                        bola itu memantul kembali setinggi \(
+                                        \frac{3}{4} \) dari ketinggian
+                                        sebelumnya. Tinggi pantulan keempat bola
+                                        tersebut adalah...
+                                   </p>
+                              </div>
+                              <div class="options">
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q4"
+                                             id="q4a"
+                                             value="a"
+                                        />
+                                        <label for="q4a"
+                                             >A. \( \frac{135}{64} \)
+                                             meter</label
+                                        >
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q4"
+                                             id="q4b"
+                                             value="b"
+                                        />
+                                        <label for="q4b"
+                                             >B. \( \frac{81}{64} \)
+                                             meter</label
+                                        >
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q4"
+                                             id="q4c"
+                                             value="c"
+                                        />
+                                        <label for="q4c"
+                                             >C. \( \frac{243}{256} \)
+                                             meter</label
+                                        >
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q4"
+                                             id="q4d"
+                                             value="d"
+                                        />
+                                        <label for="q4d"
+                                             >D. \( \frac{729}{1024} \)
+                                             meter</label
+                                        >
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q4"
+                                             id="q4e"
+                                             value="e"
+                                        />
+                                        <label for="q4e"
+                                             >E. \( \frac{2187}{4096} \)
+                                             meter</label
+                                        >
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="navigation">
+                              <button
+                                   class="nav-btn prev"
+                                   onclick="showQuestion(3)"
+                              >
+                                   ← Sebelumnya
+                              </button>
+                              <button
+                                   class="nav-btn next"
+                                   onclick="showQuestion(5)"
+                              >
+                                   Berikutnya →
+                              </button>
+                         </div>
+                    </div>
+                    <!-- Soal 5 -->
+                    <div class="question-container" id="question-5">
+                         <div class="question">
+                              <div class="question-number">5</div>
+                              <div class="question-text">
+                                   <p>
+                                        Sebuah toko menawarkan skema cicilan
+                                        dengan bunga majemuk 2% per bulan. Jika
+                                        seorang pelanggan membayar uang muka
+                                        Rp500.000 dan cicilan 6 bulan dengan
+                                        angsuran tetap, maka besar angsuran per
+                                        bulan adalah... (dibulatkan ke atas)
+                                   </p>
+                              </div>
+                              <div class="options">
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q5"
+                                             id="q5a"
+                                             value="a"
+                                        />
+                                        <label for="q5a">A. Rp90.000</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q5"
+                                             id="q5b"
+                                             value="b"
+                                        />
+                                        <label for="q5b">B. Rp95.000</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q5"
+                                             id="q5c"
+                                             value="c"
+                                        />
+                                        <label for="q5c">C. Rp100.000</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q5"
+                                             id="q5d"
+                                             value="d"
+                                        />
+                                        <label for="q5d">D. Rp105.000</label>
+                                   </div>
+                                   <div class="option">
+                                        <input
+                                             type="radio"
+                                             name="q5"
+                                             id="q5e"
+                                             value="e"
+                                        />
+                                        <label for="q5e">E. Rp110.000</label>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="navigation">
+                              <button
+                                   class="nav-btn prev"
+                                   onclick="showQuestion(4)"
+                              >
+                                   ← Sebelumnya
+                              </button>
+                              <button
+                                   class="nav-btn next"
+                                   onclick="submitQuiz()"
+                              >
+                                   Selesai →
+                              </button>
+                         </div>
+                    </div>
+                    <!-- Hasil Kuis -->
+                    <div class="result" id="result">
+                         <div class="score" id="score">Skor: 0/5</div>
+                         <div class="feedback" id="feedback"></div>
+                         <div class="correct-answers">
+                              <h3>Kunci Jawaban dan Pembahasan:</h3>
+                              <div class="answer-item">
+                                   <h4>Soal 1: Barisan Aritmatika</h4>
+                                   <p></p>
+                                   <p class="explanation">
+                                        Rumus suku ke-n barisan aritmatika: \(
+                                        U_n = a + (n-1)b \)<br />
+                                        \( U_{10} = 3 + (10-1) \times 4 = 3 + 9
+                                        \times 4 = 3 + 36 = 39 \)<br />
+                                   </p>
+                              </div>
+                              <div class="answer-item">
+                                   <h4>Soal 2: Deret Aritmatika</h4>
+                                   <p></p>
+                                   <p class="explanation">
+                                        Rumus jumlah deret aritmatika: \( S_n =
+                                        \frac{n}{2} (a + U_n) \)<br />
+                                        \( 154 = \frac{n}{2} (5 + 23) =
+                                        \frac{n}{2} \times 28 = 14n \)<br />
+                                        \( n = \frac{154}{14} = 11 \)<br />
+                                   </p>
+                              </div>
+                              <div class="answer-item">
+                                   <h4>Soal 3: Deret Geometri Tak Hingga</h4>
+                                   <p></p>
+                                   <p class="explanation">
+                                        Rumus jumlah deret geometri tak hingga:
+                                        \( S_\infty = \frac{a}{1-r} \)<br />
+                                        \( S_\infty = \frac{2}{1-\frac{1}{2}} =
+                                        \frac{2}{\frac{1}{2}} = 2 \times 2 = 4
+                                        \)<br />
+                                   </p>
+                              </div>
+                              <div class="answer-item">
+                                   <h4>Soal 4: Barisan Geometri</h4>
+                                   <p></p>
+                                   <p class="explanation">
+                                        Tinggi pantulan ke-n = \( 20 \times
+                                        \left(\frac{3}{4}\right)^n \)<br />
+                                        Tinggi pantulan ke-4 = \( 20 \times
+                                        \left(\frac{3}{4}\right)^4 = 20 \times
+                                        \frac{81}{256} = \frac{1620}{256} =
+                                        \frac{405}{64} \)<br />
+                                   </p>
+                              </div>
+                              <div class="answer-item">
+                                   <h4>Soal 5: Bunga Majemuk</h4>
+                                   <p></p>
+                                   <p class="explanation">
+                                        Total angsuran = Harga barang - Uang
+                                        muka<br />
+                                        Angsuran per bulan = \(
+                                        \frac{\text{Total angsuran}}{6} \)<br />
+                                        Dengan bunga majemuk, angsuran per bulan
+                                        lebih besar<br />
+                                   </p>
+                              </div>
+                         </div>
+                         <button
+                              class="nav-btn"
+                              style="margin-top: 30px"
+                              onclick="location.reload()"
+                         >
+                              Ulangi Kuis
+                         </button>
+                    </div>
+               </main>
+               <footer>
+                    <p>
+                         © 2025 Persiapan ANBK Numerasi Kelas XI - Materi
+                         Barisan dan Deret
+                    </p>
+                    <p>
+                         Made with
+                         <svg height="20" viewBox="0 0 24 24" width="20">
+                              <path
+                                   d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
+                                   fill="#B71C1C"
+                              ></path>
+                         </svg>
+                         by Sir Aan Junaidi
+                    </p>
+               </footer>
+          </div>
+          <script>
+               let currentQuestion = 1;
+               const totalQuestions = 5;
+               let userAnswers = {};
+               // Update progress bar
+               function updateProgress() {
+                    const progress = (currentQuestion / totalQuestions) * 100;
+                    document.getElementById(
+                         'progress-bar'
+                    ).style.width = `${progress}%`;
+                    document.getElementById(
+                         'current-question'
+                    ).textContent = `Soal ${currentQuestion} dari ${totalQuestions}`;
+               }
+               // Show specific question
+               function showQuestion(questionNumber) {
+                    // Hide current question
+                    document
+                         .getElementById(`question-${currentQuestion}`)
+                         .classList.remove('active');
+                    // Show new question
+                    currentQuestion = questionNumber;
+                    document
+                         .getElementById(`question-${currentQuestion}`)
+                         .classList.add('active');
+                    // Update progress
+                    updateProgress();
+                    // Update navigation button states
+                    const prevButtons =
+                         document.querySelectorAll('.nav-btn.prev');
+                    prevButtons.forEach((btn) => {
+                         if (currentQuestion === 1) {
+                              btn.disabled = true;
+                         } else {
+                              btn.disabled = false;
+                         }
+                    });
+                    // Scroll to top of question
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+               }
+               // Timer functionality
+               let timeLeft = 15 * 60; // 15 minutes in seconds
+               const timerElement = document.getElementById('timer');
+               function updateTimer() {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerElement.textContent = `⏱️ ${minutes
+                         .toString()
+                         .padStart(2, '0')}:${seconds
+                         .toString()
+                         .padStart(2, '0')}`;
+                    if (timeLeft <= 0) {
+                         submitQuiz();
+                    } else {
+                         timeLeft--;
+                    }
+               }
+               // Start timer
+               const timerInterval = setInterval(updateTimer, 1000);
+               // Submit quiz and show results
+               function submitQuiz() {
+                    clearInterval(timerInterval);
+                    // Jawaban benar
+                    const correctAnswers = {
+                         q1: 'b',
+                         q2: 'd',
+                         q3: 'd',
+                         q4: 'd',
+                         q5: 'b',
+                    };
+                    // Hitung jawaban benar
+                    let score = 0;
+                    // Periksa jawaban untuk setiap soal
+                    for (let i = 1; i <= totalQuestions; i++) {
+                         const questionName = 'q' + i;
+                         const selectedOption = document.querySelector(
+                              `input[name="${questionName}"]:checked`
+                         );
+                         if (selectedOption) {
+                              userAnswers[questionName] = selectedOption.value;
+                              if (
+                                   selectedOption.value ===
+                                   correctAnswers[questionName]
+                              ) {
+                                   score++;
+                              }
+                         }
+                    }
+                    // Hide all questions
+                    document
+                         .querySelectorAll('.question-container')
+                         .forEach((q) => {
+                              q.classList.remove('active');
+                         });
+                    // Show results
+                    const resultDiv = document.getElementById('result');
+                    const scoreDiv = document.getElementById('score');
+                    const feedbackDiv = document.getElementById('feedback');
+                    scoreDiv.textContent = `Skor: ${score}/${totalQuestions}`;
+                    if (score === totalQuestions) {
+                         feedbackDiv.innerHTML =
+                              '<p>🎉 Excellent! Kamu menguasai materi barisan dan deret dengan sangat baik <br>Jangan Lupa Screen Shoot halaman ini untuk di Upload di google form.</p>';
+                         feedbackDiv.style.color = '#2e7d32';
+                    } else if (score >= 3) {
+                         feedbackDiv.innerHTML =
+                              '<p>👍 Bagus! Pemahamanmu sudah cukup baik, tetapi masih perlu latihan.<br>Jangan Lupa Screen Shoot halaman ini untuk di Upload di google form.</p>';
+                         feedbackDiv.style.color = '#ff9800';
+                    } else {
+                         feedbackDiv.innerHTML =
+                              '<p>✏️ Perlu belajar lebih giat lagi. Pelajari kembali materi barisan dan deret. <br>Jangan Lupa Screen Shoot halaman ini untuk di Upload di google form.</p>';
+                         feedbackDiv.style.color = '#f44336';
+                    }
+                    // Tampilkan hasil
+                    resultDiv.style.display = 'block';
+                    // Scroll ke hasil
+                    resultDiv.scrollIntoView({ behavior: 'smooth' });
+               }
+               // Initialize progress bar
+               updateProgress();
+          </script>
+     </body>
+</html>
