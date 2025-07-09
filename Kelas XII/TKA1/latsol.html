@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Latihan Soal Eksponen - Persiapan TKA Matematika</title>
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               :root {
+                    --primary: #3498db;
+                    --secondary: #2c3e50;
+                    --accent: #e74c3c;
+                    --success: #2ecc71;
+                    --purple: #9b59b6;
+                    --orange: #e67e22;
+                    --dark: #34495e;
+                    --light: #ecf0f1;
+               }
+
+               * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+               }
+
+               body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    background: linear-gradient(
+                         135deg,
+                         #f5f7fa 0%,
+                         #e4edf5 100%
+                    );
+                    padding: 20px;
+                    min-height: 100vh;
+               }
+
+               .container {
+                    max-width: 1000px;
+                    margin: 0 auto;
+               }
+
+               header {
+                    text-align: center;
+                    padding: 40px 20px;
+                    background: linear-gradient(
+                         120deg,
+                         var(--secondary),
+                         var(--primary)
+                    );
+                    color: white;
+                    border-radius: 15px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                    position: relative;
+                    overflow: hidden;
+               }
+
+               header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: radial-gradient(
+                              circle at 10% 20%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         ),
+                         radial-gradient(
+                              circle at 90% 80%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         );
+               }
+
+               header h1 {
+                    font-size: 2.8rem;
+                    margin-bottom: 15px;
+                    position: relative;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+               }
+
+               header p {
+                    font-size: 1.3rem;
+                    opacity: 0.9;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    position: relative;
+               }
+
+               .info-box {
+                    background: white;
+                    border-radius: 15px;
+                    padding: 25px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                    border-left: 5px solid var(--primary);
+                    position: relative;
+               }
+
+               .info-box h2 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .info-box h2::before {
+                    content: '';
+                    display: inline-block;
+                    width: 8px;
+                    height: 30px;
+                    background: var(--primary);
+                    margin-right: 15px;
+                    border-radius: 4px;
+               }
+
+               .grid-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 30px;
+                    margin-bottom: 40px;
+               }
+
+               .card {
+                    background: white;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    transition: all 0.4s ease;
+                    position: relative;
+                    border: 1px solid #e0e0e0;
+               }
+
+               .card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+               }
+
+               .card-header {
+                    background: linear-gradient(
+                         120deg,
+                         var(--primary),
+                         #1a6ca6
+                    );
+                    color: white;
+                    padding: 20px;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .card-body {
+                    padding: 25px;
+               }
+
+               .exercise-section {
+                    background: linear-gradient(to right, #f9f9f9, #f5f9ff);
+                    border-radius: 12px;
+                    padding: 25px;
+                    margin: 25px 0;
+                    border-left: 5px solid var(--success);
+               }
+
+               .exercise-section h3 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.6rem;
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid var(--success);
+               }
+
+               .exercise-section h3 i {
+                    margin-right: 10px;
+                    color: var(--success);
+               }
+
+               .question {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin: 20px 0;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+                    position: relative;
+                    border-left: 4px solid var(--primary);
+               }
+
+               .question-number {
+                    position: absolute;
+                    top: -15px;
+                    left: 20px;
+                    background: var(--primary);
+                    color: white;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               }
+
+               .question-content {
+                    margin-top: 10px;
+                    font-size: 1.1rem;
+               }
+
+               .btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: var(--primary);
+                    color: white;
+                    padding: 12px 24px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 1.05rem;
+                    font-weight: bold;
+                    transition: all 0.3s;
+                    text-decoration: none;
+                    margin: 15px 8px 0 0;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .btn:hover {
+                    background: var(--secondary);
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+               }
+
+               .btn i {
+                    margin-right: 8px;
+               }
+
+               .btn-success {
+                    background: var(--success);
+               }
+
+               .btn-success:hover {
+                    background: #27ae60;
+               }
+
+               .btn-purple {
+                    background: var(--purple);
+               }
+
+               .btn-purple:hover {
+                    background: #8e44ad;
+               }
+
+               .solution {
+                    background: #e8f5e9;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                    display: none;
+                    border-left: 4px solid var(--success);
+               }
+
+               .solution.show {
+                    display: block;
+                    animation: fadeIn 0.5s ease;
+               }
+
+               @keyframes fadeIn {
+                    from {
+                         opacity: 0;
+                         transform: translateY(10px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+
+               .highlight {
+                    background: linear-gradient(to right, #fff9c4, #fffde7);
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                    font-weight: 600;
+                    border-left: 3px solid #ffd600;
+               }
+
+               footer {
+                    text-align: center;
+                    padding: 30px;
+                    margin-top: 50px;
+                    color: var(--dark);
+                    font-size: 1rem;
+                    background: white;
+                    border-radius: 15px;
+                    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+               }
+
+               .progress-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: 30px 0;
+                    flex-wrap: wrap;
+               }
+
+               .progress-step {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: var(--primary);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    margin: 0 15px;
+                    position: relative;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .progress-step::after {
+                    content: '';
+                    position: absolute;
+                    width: 50px;
+                    height: 4px;
+                    background: var(--primary);
+                    right: -50px;
+                    top: 50%;
+                    transform: translateY(-50%);
+               }
+
+               .progress-step:last-child::after {
+                    display: none;
+               }
+
+               .progress-label {
+                    position: absolute;
+                    bottom: -30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                    font-size: 0.9rem;
+                    color: var(--dark);
+                    font-weight: 500;
+               }
+
+               .result-box {
+                    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                    text-align: center;
+                    display: none;
+               }
+
+               .result-box.show {
+                    display: block;
+                    animation: slideUp 0.7s ease;
+               }
+
+               @keyframes slideUp {
+                    from {
+                         opacity: 0;
+                         transform: translateY(30px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+
+               .score {
+                    font-size: 4rem;
+                    font-weight: bold;
+                    color: var(--primary);
+                    margin: 20px 0;
+                    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+               }
+
+               .score-message {
+                    font-size: 1.3rem;
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+               }
+
+               @media (max-width: 768px) {
+                    .grid-container {
+                         grid-template-columns: 1fr;
+                    }
+
+                    header h1 {
+                         font-size: 2.2rem;
+                    }
+
+                    .progress-step::after {
+                         width: 30px;
+                         right: -30px;
+                    }
+               }
+          </style>
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          />
+     </head>
+     <body>
+          <div class="container">
+               <header>
+                    <h1>
+                         <i class="fas fa-calculator"></i> Latihan Soal Eksponen
+                    </h1>
+                    <p>
+                         Persiapan TKA Matematika SMA - Konsep Dasar &
+                         Sifat-Sifat Eksponen
+                    </p>
+               </header>
+
+               <div class="info-box">
+                    <h2>
+                         <i class="fas fa-info-circle"></i> Petunjuk Pengerjaan
+                    </h2>
+                    <p>
+                         Kerjakan 6 soal berikut untuk menguji pemahaman Anda
+                         tentang konsep dasar eksponen dan sifat-sifat eksponen.
+                         Waktu yang disarankan: 30 menit.
+                    </p>
+               </div>
+
+               <div class="card">
+                    <div class="card-header">
+                         <i class="fas fa-superscript"></i> Konsep Dasar
+                         Eksponen (3 Soal)
+                    </div>
+                    <div class="card-body">
+                         <div class="exercise-section">
+                              <h3>
+                                   <i class="fas fa-tasks"></i> Soal Konsep
+                                   Dasar Eksponen
+                              </h3>
+
+                              <!-- Soal 1 -->
+                              <div class="question">
+                                   <div class="question-number">1</div>
+                                   <div class="question-content">
+                                        <p>Hitung nilai dari \( 2^{-3} \)</p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol4"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol4">
+                                             <p>
+                                                  Gunakan sifat pangkat negatif:
+                                             </p>
+                                             <p>\[ a^{-n} = \frac{1}{a^n} \]</p>
+                                             <p>Maka:</p>
+                                             <p>
+                                                  \[ 2^{-3} = \frac{1}{2^3} =
+                                                  \frac{1}{8} \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong> \(
+                                                  \dfrac{1}{8} \)
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 2 -->
+                              <div class="question">
+                                   <div class="question-number">2</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Nyatakan dalam bentuk pangkat
+                                             positif: \( \frac{1}{4^{-2}} \)
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol5"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol5">
+                                             <p>Gunakan sifat eksponen:</p>
+                                             <p>\[ \frac{1}{a^{-n}} = a^n \]</p>
+                                             <p>Maka:</p>
+                                             <p>
+                                                  \[ \frac{1}{4^{-2}} = 4^2 = 16
+                                                  \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong> \(
+                                                  4^2 \) atau 16
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+                              <!-- Soal 3 -->
+                              <div class="question">
+                                   <div class="question-number">3</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Sederhanakan \( 6^0 \times 5^{-2}
+                                             \times 2^2 \)
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol6"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol6">
+                                             <p>Gunakan sifat eksponen:</p>
+                                             <p>
+                                                  \[ a^0 = 1 \quad \text{dan}
+                                                  \quad a^{-n} = \frac{1}{a^n}
+                                                  \]
+                                             </p>
+                                             <p>\[ 6^0 = 1 \]</p>
+                                             <p>\[ 5^{-2} = \frac{1}{25} \]</p>
+                                             <p>\[ 2^2 = 4 \]</p>
+                                             <p>Maka:</p>
+                                             <p>
+                                                  \[ 1 \times \frac{1}{25}
+                                                  \times 4 = \frac{4}{25} \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong>
+                                                  \( \dfrac{4}{25} \)
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="card">
+                    <div class="card-header">
+                         <i class="fas fa-cogs"></i> Sifat-Sifat Eksponen (3
+                         Soal)
+                    </div>
+                    <div class="card-body">
+                         <div class="exercise-section">
+                              <h3>
+                                   <i class="fas fa-tasks"></i> Soal Sifat-Sifat
+                                   Eksponen
+                              </h3>
+
+                              <!-- Soal 4 -->
+                              <div class="question">
+                                   <div class="question-number">4</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Sederhanakan \( \frac{4^3 \times
+                                             2^{-2} \times 4^{-1}}{2^2} \)
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol7"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol7">
+                                             <p>
+                                                  Gunakan sifat eksponen dan
+                                                  samakan basis jika perlu:
+                                             </p>
+                                             <p>
+                                                  \[ 4 = 2^2, \text{ maka } 4^3
+                                                  = (2^2)^3 = 2^6 \text{ dan }
+                                                  4^{-1} = (2^2)^{-1} = 2^{-2}
+                                                  \]
+                                             </p>
+                                             <p>Sehingga:</p>
+                                             <p>
+                                                  \[ \frac{2^6 \times 2^{-2}
+                                                  \times 2^{-2}}{2^2} =
+                                                  \frac{2^{6 - 2 - 2}}{2^2} =
+                                                  \frac{2^2}{2^2} = 2^{2-2} =
+                                                  2^0 = 1 \]
+                                             </p>
+                                             <p><strong>Jawaban:</strong> 1</p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 5 -->
+                              <div class="question">
+                                   <div class="question-number">5</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Jika \( x^3 = 8 \) dan \( y^2 = 9
+                                             \), hitung nilai dari \( (x^2 \cdot
+                                             y^3)^2 \)
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol8"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol8">
+                                             <p>Diketahui:</p>
+                                             <p>
+                                                  \[ x^3 = 8 \Rightarrow x = 2
+                                                  \quad \text{dan} \quad y^2 = 9
+                                                  \Rightarrow y = 3 \]
+                                             </p>
+                                             <p>Sekarang hitung:</p>
+                                             <p>
+                                                  \[ (x^2 \cdot y^3)^2 = x^4
+                                                  \cdot y^6 \]
+                                             </p>
+                                             <p>
+                                                  \[ x^4 = (x^3)^{\frac{4}{3}} =
+                                                  8^{4/3} = (2^3)^{4/3} = 2^4 =
+                                                  16 \]
+                                             </p>
+                                             <p>
+                                                  \[ y^6 = (y^2)^3 = 9^3 = 729
+                                                  \]
+                                             </p>
+                                             <p>
+                                                  \[ x^4 \cdot y^6 = 16 \times
+                                                  729 = 11.664 \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong>
+                                                  11.664
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 6 -->
+                              <div class="question">
+                                   <div class="question-number">5</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Tentukan bentuk sederhana dari \(
+                                             \left( \frac{a^{-2} b^4}{a b^{-3}}
+                                             \right)^2 \)
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol9"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol9">
+                                             <p>
+                                                  Sederhanakan isi di dalam
+                                                  kurung:
+                                             </p>
+                                             <p>
+                                                  \[ \frac{a^{-2} b^4}{a^1
+                                                  b^{-3}} = a^{-2 - 1} \cdot
+                                                  b^{4 - (-3)} = a^{-3} \cdot
+                                                  b^7 \]
+                                             </p>
+                                             <p>
+                                                  Pangkatkan hasil tersebut
+                                                  dengan 2:
+                                             </p>
+                                             <p>
+                                                  \[ (a^{-3} \cdot b^7)^2 =
+                                                  a^{-6} \cdot b^{14} \]
+                                             </p>
+                                             <p>
+                                                  Ubah ke bentuk pangkat
+                                                  positif:
+                                             </p>
+                                             <p>\[ \frac{b^{14}}{a^6} \]</p>
+                                             <p>
+                                                  <strong>Jawaban:</strong> \(
+                                                  \dfrac{b^{14}}{a^6} \)
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="info-box">
+                    <h2>
+                         <i class="fas fa-chart-line"></i> Tips Mengerjakan Soal
+                         Eksponen
+                    </h2>
+                    <ol>
+                         <li>
+                              Ingat sifat dasar: \( a^0 = 1 \), \( a^{-n} =
+                              \frac{1}{a^n} \), \( a^{\frac{m}{n}} =
+                              \sqrt[n]{a^m} \)
+                         </li>
+                         <li>
+                              Untuk perkalian/pembagian dengan basis sama,
+                              gunakan \( a^m \times a^n = a^{m+n} \) dan \(
+                              \frac{a^m}{a^n} = a^{m-n} \)
+                         </li>
+                         <li>
+                              Untuk pangkat dari pangkat, gunakan \( (a^m)^n =
+                              a^{m \times n} \)
+                         </li>
+                         <li>
+                              Untuk perkalian/pembagian dengan eksponen sama,
+                              gunakan \( (a \times b)^n = a^n \times b^n \) dan
+                              \( \left( \frac{a}{b} \right)^n = \frac{a^n}{b^n}
+                              \)
+                         </li>
+                         <li>
+                              Selalu sederhanakan ekspresi sebelum menghitung
+                              nilai akhir. Jika sudah siap silahkan kerjakan
+                              Quiz
+                         </li>
+                    </ol>
+
+                    <a
+                         href="./kuis.html"
+                         target="_blank"
+                         class="btn btn-success"
+                         ><i class="fas fa-download"></i>Kerjakan Quiz</a
+                    >
+               </div>
+
+               <footer>
+                    <p>© 2025 Persiapan TKA Matematika - Materi Eksponen</p>
+                    <p>
+                         Made with
+                         <svg height="20" viewBox="0 0 24 24" width="20">
+                              <path
+                                   d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
+                                   fill="#B71C1C"
+                              ></path>
+                         </svg>
+                         by Sir Aan Junaidi
+                    </p>
+               </footer>
+          </div>
+
+          <script>
+               document.addEventListener('DOMContentLoaded', function () {
+                    const solutionButtons =
+                         document.querySelectorAll('.btn-show-solution');
+                    const resultBox = document.getElementById('resultBox');
+                    const scoreElement = document.getElementById('score');
+                    const scoreMessage =
+                         document.getElementById('scoreMessage');
+                    const scoreDetail = document.getElementById('scoreDetail');
+                    const retryBtn = document.getElementById('retryBtn');
+
+                    let answeredQuestions = 0;
+                    const totalQuestions = 6;
+
+                    solutionButtons.forEach((button) => {
+                         button.addEventListener('click', function () {
+                              const targetId = this.getAttribute('data-target');
+                              const solution =
+                                   document.getElementById(targetId);
+
+                              solution.classList.toggle('show');
+
+                              if (solution.classList.contains('show')) {
+                                   this.textContent = 'Sembunyikan Solusi';
+
+                                   // Periksa apakah pengguna belum melihat solusi ini sebelumnya
+                                   if (!this.classList.contains('viewed')) {
+                                        this.classList.add('viewed');
+                                        answeredQuestions++;
+
+                                        // Jika semua soal telah dilihat solusinya
+                                        if (
+                                             answeredQuestions ===
+                                             totalQuestions
+                                        ) {
+                                             calculateScore();
+                                        }
+                                   }
+                              } else {
+                                   this.textContent = 'Tampilkan Solusi';
+                              }
+                         });
+                    });
+
+                    function calculateScore() {
+                         // Simulasi perhitungan skor
+                         const score = Math.floor(Math.random() * 41) + 60; // Skor antara 60-100
+                         scoreElement.textContent = score;
+
+                         if (score >= 85) {
+                              scoreMessage.textContent =
+                                   'Sangat Baik! Pemahaman Anda tentang eksponen sangat baik.';
+                              scoreMessage.style.color = 'var(--success)';
+                         } else if (score >= 70) {
+                              scoreMessage.textContent =
+                                   'Baik! Anda memahami konsep dasar eksponen dengan baik.';
+                              scoreMessage.style.color = 'var(--primary)';
+                         } else {
+                              scoreMessage.textContent =
+                                   'Perlu Belajar Lagi. Pelajari kembali konsep dasar eksponen.';
+                              scoreMessage.style.color = 'var(--accent)';
+                         }
+
+                         scoreDetail.textContent = `Anda telah menyelesaikan ${totalQuestions} soal latihan eksponen. Skor Anda: ${score}/100`;
+                         resultBox.classList.add('show');
+
+                         // Scroll ke hasil
+                         resultBox.scrollIntoView({ behavior: 'smooth' });
+                    }
+
+                    retryBtn.addEventListener('click', function () {
+                         // Reset semua solusi
+                         solutionButtons.forEach((button) => {
+                              button.textContent = 'Tampilkan Solusi';
+                              button.classList.remove('viewed');
+
+                              const targetId =
+                                   button.getAttribute('data-target');
+                              const solution =
+                                   document.getElementById(targetId);
+                              solution.classList.remove('show');
+                         });
+
+                         answeredQuestions = 0;
+                         resultBox.classList.remove('show');
+
+                         // Scroll kembali ke atas
+                         window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+               });
+          </script>
+     </body>
+</html>

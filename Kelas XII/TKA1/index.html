@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persiapan TKA Matematika: Eksponen</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+            --purple: #9b59b6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(120deg, var(--secondary), var(--primary));
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,0.1) 0%, transparent 20%);
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .info-box {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        
+        .info-box h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-box h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 30px;
+            background: var(--primary);
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(120deg, var(--primary), #1a6ca6);
+            color: white;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            margin-right: 12px;
+            font-size: 1.8rem;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 14px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--secondary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        tr:hover {
+            background-color: #f1f8ff;
+        }
+        
+        .example-box {
+            background: linear-gradient(to right, #e8f4fc, #e3f2fd);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 5px solid var(--primary);
+            position: relative;
+        }
+        
+        .example-box h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-box h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .exercise-box {
+            background: linear-gradient(to right, #f9f9f9, #f5f9ff);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 5px solid var(--success);
+        }
+        
+        .exercise-box h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .exercise-box h3 i {
+            margin-right: 10px;
+            color: var(--success);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            margin: 15px 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+        }
+        
+        .btn-purple {
+            background: var(--purple);
+        }
+        
+        .btn-purple:hover {
+            background: #8e44ad;
+        }
+        
+        .solution {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+            border-left: 4px solid var(--success);
+        }
+        
+        .solution.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .highlight {
+            background: linear-gradient(to right, #fff9c4, #fffde7);
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+            border-left: 3px solid #ffd600;
+        }
+        
+        .prerequisite-section {
+            background: linear-gradient(to right, #f3e5f5, #f8f4ff);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 5px solid var(--purple);
+        }
+        
+        .prerequisite-section h2 {
+            color: var(--purple);
+            margin-bottom: 25px;
+            font-size: 1.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .prerequisite-section h2 i {
+            margin-right: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: var(--dark);
+            font-size: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin: 0 15px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .progress-step::after {
+            content: "";
+            position: absolute;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            right: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .progress-step:last-child::after {
+            display: none;
+        }
+        
+        .progress-label {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.9rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .progress-step::after {
+                width: 30px;
+                right: -30px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Materi 1</h1>
+            <h1><i class="fas fa-calculator"></i> Persiapan TKA Matematika: Eksponen</h1>
+            <p>Materi Lengkap Beserta Prasyarat untuk Persiapan Ujian TKA SMA</p>
+        </header>
+        
+        <div class="info-box">
+            <h2><i class="fas fa-info-circle"></i> Panduan Belajar</h2>
+            <p>Pelajari materi eksponen secara sistematis berikut untuk mempersiapkan ujian TKA November mendatang. Fokus pada pemahaman konsep dasar, sifat-sifat, dan aplikasi eksponen dalam berbagai tipe soal.</p>
+          
+
+        </div>
+        
+        <div class="prerequisite-section">
+            <h2><i class="fas fa-book"></i> Materi Prasyarat</h2>
+            <p>Sebelum mempelajari eksponen, pastikan Anda memahami materi prasyarat berikut:</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-superscript"></i> Bilangan Berpangkat
+                </div>
+                <div class="card-body">
+                    <p>Bilangan berpangkat adalah bentuk perkalian berulang dari bilangan yang sama.</p>
+                    <p>\[ a^n = \underbrace{a \times a \times \cdots \times a}_{\text{n faktor}} \]</p>
+                    <p>Contoh: \( 5^3 = 5 \times 5 \times 5 = 125 \)</p>
+                    
+                    <div class="example-box">
+                        <h3><i class="fas fa-lightbulb"></i> Contoh Soal</h3>
+                        <p>Hitung nilai dari \( 2^4 \times 3^2 \)</p>
+                        <button class="btn btn-show-solution" data-target="sol0">Tampilkan Solusi</button>
+                        <div class="solution" id="sol0">
+                            <p>\[ 2^4 = 2 \times 2 \times 2 \times 2 = 16 \]</p>
+                            <p>\[ 3^2 = 3 \times 3 = 9 \]</p>
+                            <p>\[ 2^4 \times 3^2 = 16 \times 9 = 144 \]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-step">1<span class="progress-label">Prasyarat</span></div>
+                <div class="progress-step">2<span class="progress-label">Eksponen</span></div>
+                <div class="progress-step">3<span class="progress-label">Latihan</span></div>
+                <div class="progress-step">4<span class="progress-label">Evaluasi</span></div>
+            </div>
+        </div>
+        
+        <div class="grid-container">
+            <!-- Eksponen Card -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i> Konsep Dasar Eksponen
+                </div>
+                <div class="card-body">
+                    <h3>Definisi Eksponen</h3>
+                    <p>Eksponen adalah bentuk perkalian berulang dari suatu bilangan yang sama. Bentuk umum:</p>
+                    <p>\[ a^n = \underbrace{a \times a \times \cdots \times a}_{\text{n faktor}} \]</p>
+                    <p>dengan:</p>
+                    <ul>
+                        <li>\( a \) = basis (bilangan pokok)</li>
+                        <li>\( n \) = pangkat (eksponen)</li>
+                    </ul>
+                    
+                    <h3>Jenis-jenis Eksponen</h3>
+                    <table>
+                        <tr>
+                            <th>Jenis</th>
+                            <th>Bentuk</th>
+                            <th>Contoh</th>
+                        </tr>
+                        <tr>
+                            <td>Pangkat Bulat Positif</td>
+                            <td>\( a^n \)</td>
+                            <td>\( 3^4 = 81 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat Nol</td>
+                            <td>\( a^0 = 1 \)</td>
+                            <td>\( 7^0 = 1 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat Negatif</td>
+                            <td>\( a^{-n} = \frac{1}{a^n} \)</td>
+                            <td>\( 2^{-3} = \frac{1}{8} \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat Pecahan</td>
+                            <td>\( a^{m/n} = \sqrt[n]{a^m} \)</td>
+                            <td>\( 16^{3/4} = \sqrt[4]{16^3} = 8 \)</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="example-box">
+                        <h3><i class="fas fa-lightbulb"></i> Contoh Soal</h3>
+                        <p>Sederhanakan \( \left( \frac{2^3 \times 3^4}{2 \times 3^2} \right)^2 \)</p>
+                        <button class="btn btn-show-solution" data-target="sol1">Tampilkan Solusi</button>
+                        <div class="solution" id="sol1">
+                            <p>\[ \text{Inside parentheses: } \frac{2^3 \times 3^4}{2^1 \times 3^2} = 2^{3-1} \times 3^{4-2} = 2^2 \times 3^2 \]</p>
+                            <p>\[ \left(2^2 \times 3^2\right)^2 = 2^{2 \times 2} \times 3^{2 \times 2} = 2^4 \times 3^4 \]</p>
+                            <p>\[ 16 \times 81 = 1296 \]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sifat Eksponen Card -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i> Sifat-Sifat Eksponen
+                </div>
+                <div class="card-body">
+                    <h3>Sifat Operasi Eksponen</h3>
+                    <table>
+                        <tr>
+                            <th>Sifat</th>
+                            <th>Rumus</th>
+                            <th>Contoh</th>
+                        </tr>
+                        <tr>
+                            <td>Perkalian</td>
+                            <td>\( a^m \times a^n = a^{m+n} \)</td>
+                            <td>\( 3^2 \times 3^5 = 3^{7} = 2187 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pembagian</td>
+                            <td>\( \frac{a^m}{a^n} = a^{m-n} \)</td>
+                            <td>\( \frac{5^4}{5^2} = 5^{2} = 25 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat dari Pangkat</td>
+                            <td>\( (a^m)^n = a^{m \times n} \)</td>
+                            <td>\( (2^3)^2 = 2^6 = 64 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat dari Perkalian</td>
+                            <td>\( (a \times b)^n = a^n \times b^n \)</td>
+                            <td>\( (2 \cdot 3)^3 = 8 \cdot 27 = 216 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Pangkat dari Pembagian</td>
+                            <td>\( \left( \frac{a}{b} \right)^n = \frac{a^n}{b^n} \)</td>
+                            <td>\( \left( \frac{4}{2} \right)^3 = \frac{64}{8} = 8 \)</td>
+                        </tr>
+                    </table>
+                    
+                    <div class="example-box">
+                        <h3><i class="fas fa-lightbulb"></i> Contoh Soal</h3>
+                        <p>Jika \( 2^x = 8 \) dan \( 3^y = 81 \), tentukan nilai dari \( 2^{x+1} \times 3^{y-2} \)</p>
+                        <button class="btn btn-show-solution" data-target="sol2">Tampilkan Solusi</button>
+                        <div class="solution" id="sol2">
+                            <p>\[ 2^x = 8 = 2^3 \Rightarrow x = 3 \]</p>
+                            <p>\[ 3^y = 81 = 3^4 \Rightarrow y = 4 \]</p>
+                            <p>\[ 2^{x+1} \times 3^{y-2} = 2^{3+1} \times 3^{4-2} = 2^4 \times 3^2 \]</p>
+                            <p>\[ 16 \times 9 = 144 \]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+       
+            
+            <div class="example-box">
+                <h3><i class="fas fa-lightbulb"></i> Siap Latihan Soal? Klik Tombol berikut ini</h3>
+               
+                <a href="./latsol.html"class="btn btn-show-solution " target="_blank">Latihan Soal</a> 
+       
+                  
+                </div>
+            </div>
+     
+       
+        <footer>
+            <p>© 2025 Persiapan TKA Matematika - Materi Eksponen</p>
+            <p>Made with <svg height="20" viewBox="0 0 24 24" width="20"><path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z" fill="#B71C1C"></path></svg> by Sir Aan Junaidi</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const solutionButtons = document.querySelectorAll('.btn-show-solution');
+            
+            solutionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const solution = document.getElementById(targetId);
+                    
+                    solution.classList.toggle('show');
+                    
+                    if (solution.classList.contains('show')) {
+                        this.textContent = 'Sembunyikan Solusi';
+                    } else {
+                        this.textContent = 'Tampilkan Solusi';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
