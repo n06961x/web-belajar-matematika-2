@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Latihan Soal Bunga Tunggal - Persiapan TKA Matematika</title>
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               :root {
+                    --primary: #3498db;
+                    --secondary: #2c3e50;
+                    --accent: #e74c3c;
+                    --success: #2ecc71;
+                    --purple: #9b59b6;
+                    --orange: #e67e22;
+                    --dark: #34495e;
+                    --light: #ecf0f1;
+               }
+
+               * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+               }
+
+               body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    background: linear-gradient(
+                         135deg,
+                         #f5f7fa 0%,
+                         #e4edf5 100%
+                    );
+                    padding: 20px;
+                    min-height: 100vh;
+               }
+
+               .container {
+                    max-width: 1000px;
+                    margin: 0 auto;
+               }
+
+               header {
+                    text-align: center;
+                    padding: 40px 20px;
+                    background: linear-gradient(
+                         120deg,
+                         var(--secondary),
+                         var(--primary)
+                    );
+                    color: white;
+                    border-radius: 15px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                    position: relative;
+                    overflow: hidden;
+               }
+
+               header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: radial-gradient(
+                              circle at 10% 20%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         ),
+                         radial-gradient(
+                              circle at 90% 80%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         );
+               }
+
+               header h1 {
+                    font-size: 2.8rem;
+                    margin-bottom: 15px;
+                    position: relative;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+               }
+
+               header p {
+                    font-size: 1.3rem;
+                    opacity: 0.9;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    position: relative;
+               }
+
+               .info-box {
+                    background: white;
+                    border-radius: 15px;
+                    padding: 25px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                    border-left: 5px solid var(--primary);
+                    position: relative;
+               }
+
+               .info-box h2 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .info-box h2::before {
+                    content: '';
+                    display: inline-block;
+                    width: 8px;
+                    height: 30px;
+                    background: var(--primary);
+                    margin-right: 15px;
+                    border-radius: 4px;
+               }
+
+               .grid-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 30px;
+                    margin-bottom: 40px;
+               }
+
+               .card {
+                    background: white;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    transition: all 0.4s ease;
+                    position: relative;
+                    border: 1px solid #e0e0e0;
+               }
+
+               .card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+               }
+
+               .card-header {
+                    background: linear-gradient(
+                         120deg,
+                         var(--primary),
+                         #1a6ca6
+                    );
+                    color: white;
+                    padding: 20px;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .card-body {
+                    padding: 25px;
+               }
+
+               .exercise-section {
+                    background: linear-gradient(to right, #f9f9f9, #f5f9ff);
+                    border-radius: 12px;
+                    padding: 25px;
+                    margin: 25px 0;
+                    border-left: 5px solid var(--success);
+               }
+
+               .exercise-section h3 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.6rem;
+                    display: flex;
+                    align-items: center;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid var(--success);
+               }
+
+               .exercise-section h3 i {
+                    margin-right: 10px;
+                    color: var(--success);
+               }
+
+               .question {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin: 20px 0;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+                    position: relative;
+                    border-left: 4px solid var(--primary);
+               }
+
+               .question-number {
+                    position: absolute;
+                    top: -15px;
+                    left: 20px;
+                    background: var(--primary);
+                    color: white;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+               }
+
+               .question-content {
+                    margin-top: 10px;
+                    font-size: 1.1rem;
+               }
+
+               .btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: var(--primary);
+                    color: white;
+                    padding: 12px 24px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 1.05rem;
+                    font-weight: bold;
+                    transition: all 0.3s;
+                    text-decoration: none;
+                    margin: 15px 8px 0 0;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .btn:hover {
+                    background: var(--secondary);
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+               }
+
+               .btn i {
+                    margin-right: 8px;
+               }
+
+               .btn-success {
+                    background: var(--success);
+               }
+
+               .btn-success:hover {
+                    background: #27ae60;
+               }
+
+               .btn-purple {
+                    background: var(--purple);
+               }
+
+               .btn-purple:hover {
+                    background: #8e44ad;
+               }
+
+               .solution {
+                    background: #e8f5e9;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                    display: none;
+                    border-left: 4px solid var(--success);
+               }
+
+               .solution.show {
+                    display: block;
+                    animation: fadeIn 0.5s ease;
+               }
+
+               @keyframes fadeIn {
+                    from {
+                         opacity: 0;
+                         transform: translateY(10px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+
+               .highlight {
+                    background: linear-gradient(to right, #fff9c4, #fffde7);
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                    font-weight: 600;
+                    border-left: 3px solid #ffd600;
+               }
+
+               footer {
+                    text-align: center;
+                    padding: 30px;
+                    margin-top: 50px;
+                    color: var(--dark);
+                    font-size: 1rem;
+                    background: white;
+                    border-radius: 15px;
+                    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+               }
+
+               .progress-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: 30px 0;
+                    flex-wrap: wrap;
+               }
+
+               .progress-step {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: var(--primary);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    margin: 0 15px;
+                    position: relative;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .progress-step::after {
+                    content: '';
+                    position: absolute;
+                    width: 50px;
+                    height: 4px;
+                    background: var(--primary);
+                    right: -50px;
+                    top: 50%;
+                    transform: translateY(-50%);
+               }
+
+               .progress-step:last-child::after {
+                    display: none;
+               }
+
+               .progress-label {
+                    position: absolute;
+                    bottom: -30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                    font-size: 0.9rem;
+                    color: var(--dark);
+                    font-weight: 500;
+               }
+
+               .result-box {
+                    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                    text-align: center;
+                    display: none;
+               }
+
+               .result-box.show {
+                    display: block;
+                    animation: slideUp 0.7s ease;
+               }
+
+               @keyframes slideUp {
+                    from {
+                         opacity: 0;
+                         transform: translateY(30px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+
+               .score {
+                    font-size: 4rem;
+                    font-weight: bold;
+                    color: var(--primary);
+                    margin: 20px 0;
+                    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+               }
+
+               .score-message {
+                    font-size: 1.3rem;
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+               }
+
+               @media (max-width: 768px) {
+                    .grid-container {
+                         grid-template-columns: 1fr;
+                    }
+
+                    header h1 {
+                         font-size: 2.2rem;
+                    }
+
+                    .progress-step::after {
+                         width: 30px;
+                         right: -30px;
+                    }
+               }
+          </style>
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          />
+     </head>
+     <body>
+          <div class="container">
+               <header>
+                    <h1>
+                         <i class="fas fa-percentage"></i> Latihan Soal Bunga
+                         Tunggal
+                    </h1>
+                    <p>Konsep dan Aplikasi Bunga Tunggal</p>
+               </header>
+
+               <div class="info-box">
+                    <h2>
+                         <i class="fas fa-info-circle"></i> Petunjuk Pengerjaan
+                    </h2>
+                    <p>
+                         Kerjakan 6 soal berikut untuk menguji pemahaman Anda
+                         tentang konsep bunga tunggal. Waktu yang disarankan: 30
+                         menit. Gunakan rumus bunga tunggal:
+                    </p>
+                    <p
+                         style="
+                              text-align: center;
+                              font-size: 1.2rem;
+                              margin: 10px 0;
+                         "
+                    >
+                         \[ B = M \times p \times t \]
+                    </p>
+                    <p>
+                         Dimana: \( B \) = Bunga, \( M \) = Modal, \( p \) =
+                         Suku bunga (desimal), \( t \) = Waktu (tahun)
+                    </p>
+               </div>
+
+               <div class="card">
+                    <div class="card-header">
+                         <i class="fas fa-calculator"></i> Perhitungan Dasar (3
+                         Soal)
+                    </div>
+                    <div class="card-body">
+                         <div class="exercise-section">
+                              <h3>
+                                   <i class="fas fa-tasks"></i> Soal Perhitungan
+                                   Dasar
+                              </h3>
+
+                              <!-- Soal 1 -->
+                              <div class="question">
+                                   <div class="question-number">1</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Rina menabung Rp2.500.000 di bank
+                                             dengan bunga tunggal 6% per tahun.
+                                             Berapa total uang Rina setelah 4
+                                             tahun?
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol1"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol1">
+                                             <p>Diketahui:</p>
+                                             <p>\[ M = ............ \]</p>
+                                             <p>\[ p = 6\% = ....... \]</p>
+                                             <p>
+                                                  \[ t = ..... \text{ tahun} \]
+                                             </p>
+                                             <p>Hitung bunga:</p>
+                                             <p>
+                                                  \[ B = M \times p \times t =
+                                                  .............. \times
+                                                  ......... \times ... =
+                                                  ............\]
+                                             </p>
+                                             <p>Total uang:</p>
+                                             <p>
+                                                  \[ \text{Total} = M + B =
+                                                  ............ + ......... =
+                                                  ............ \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong>
+                                                  Rp3.100.000
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 2 -->
+                              <div class="question">
+                                   <div class="question-number">2</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Pak Budi meminjam Rp10.000.000
+                                             dengan bunga tunggal 1.2% per bulan
+                                             selama 8 bulan. Berapa total yang
+                                             harus dikembalikan?
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol2"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol2">
+                                             <p>Diketahui:</p>
+                                             <p>\[ M = ........... \]</p>
+                                             <p>
+                                                  \[ p = .....\% = .......
+                                                  \text{ per bulan} \]
+                                             </p>
+
+                                             <p>Hitung bunga:</p>
+                                             <p>
+                                                  \[ B = M \times p \times t =
+                                                  ............ \times ......
+                                                  \times .... = ..........\]
+                                             </p>
+                                             <p>Total pengembalian:</p>
+                                             <p>
+                                                  \[ \text{Total} = M + B =
+                                                  ............ + ........... =
+                                                  ........... \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong>
+                                                  Rp10.960.000
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 3 -->
+                              <div class="question">
+                                   <div class="question-number">3</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Berapa modal awal jika setelah 3
+                                             tahun dengan bunga tunggal 5% per
+                                             tahun menjadi Rp5.750.000?
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol3"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol3">
+                                             <p>Diketahui:</p>
+                                             <p>
+                                                  \[ \text{Total} = 5.750.000 \]
+                                             </p>
+                                             <p>\[ p = 5\% = 0.05 \]</p>
+                                             <p>\[ t = 3 \text{ tahun} \]</p>
+                                             <p>Rumus total:</p>
+                                             <p>
+                                                  \[ \text{Total} = M + (M
+                                                  \times p \times t) = M(1 + p
+                                                  \times t) \]
+                                             </p>
+                                             <p>Maka:</p>
+                                             <p>
+                                                  \[ 5.750.000 = M(1 + 0.05
+                                                  \times 3) = M(1.15) \]
+                                             </p>
+                                             <p>
+                                                  \[ M = \frac{5.750.000}{1.15}
+                                                  = 5.000.000 \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong>
+                                                  Rp5.000.000
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="card">
+                    <div class="card-header">
+                         <i class="fas fa-chart-line"></i> Aplikasi Bunga
+                         Tunggal (3 Soal)
+                    </div>
+                    <div class="card-body">
+                         <div class="exercise-section">
+                              <h3>
+                                   <i class="fas fa-tasks"></i> Soal Aplikasi
+                                   Bunga Tunggal
+                              </h3>
+
+                              <!-- Soal 4 -->
+                              <div class="question">
+                                   <div class="question-number">4</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Sebuah pinjaman berbunga tunggal
+                                             12% per tahun harus dikembalikan
+                                             dalam 2 tahun sebesar Rp6.720.000.
+                                             Berapa besar pinjaman awalnya?
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol4"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol4">
+                                             <p>Diketahui:</p>
+                                             <p>
+                                                  \[ \text{Total} = 6.720.000 \]
+                                             </p>
+                                             <p>\[ p = 12\% = 0.12 \]</p>
+                                             <p>\[ t = 2 \text{ tahun} \]</p>
+                                             <p>Rumus total:</p>
+                                             <p>
+                                                  \[ \text{Total} = M(1 + p
+                                                  \times t) \]
+                                             </p>
+                                             <p>
+                                                  \[ 6.720.000 = M(1 + 0.12
+                                                  \times 2) = M(1.24) \]
+                                             </p>
+                                             <p>
+                                                  \[ M = \frac{6.720.000}{1.24}
+                                                  = 5.419.354,84 \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong>
+                                                  Rp5.419.354,84
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 5 -->
+                              <div class="question">
+                                   <div class="question-number">5</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Berapa lama waktu yang dibutuhkan
+                                             agar modal Rp3.000.000 menjadi
+                                             Rp3.450.000 dengan bunga tunggal
+                                             7.5% per tahun?
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol5"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol5">
+                                             <p>Diketahui:</p>
+                                             <p>\[ M = 3.000.000 \]</p>
+                                             <p>
+                                                  \[ \text{Total} = 3.450.000 \]
+                                             </p>
+                                             <p>\[ p = 7.5\% = 0.075 \]</p>
+                                             <p>Bunga yang diperoleh:</p>
+                                             <p>
+                                                  \[ B = 3.450.000 - 3.000.000 =
+                                                  450.000 \]
+                                             </p>
+                                             <p>Rumus bunga:</p>
+                                             <p>
+                                                  \[ B = M \times p \times t \]
+                                             </p>
+                                             <p>
+                                                  \[ 450.000 = 3.000.000 \times
+                                                  0.075 \times t \]
+                                             </p>
+                                             <p>
+                                                  \[ t = \frac{450.000}{225.000}
+                                                  = 2 \text{ tahun} \]
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong> 2
+                                                  tahun
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <!-- Soal 6 -->
+                              <div class="question">
+                                   <div class="question-number">6</div>
+                                   <div class="question-content">
+                                        <p>
+                                             Mana yang lebih menguntungkan untuk
+                                             investasi 2 tahun:<br />
+                                             A. Bunga tunggal 9% per tahun<br />
+                                             B. Bunga majemuk 8% per tahun
+                                        </p>
+                                        <button
+                                             class="btn btn-show-solution"
+                                             data-target="sol6"
+                                        >
+                                             Tampilkan Solusi
+                                        </button>
+                                        <div class="solution" id="sol6">
+                                             <p>
+                                                  <strong
+                                                       >Opsi A (Bunga
+                                                       Tunggal):</strong
+                                                  >
+                                             </p>
+                                             <p>
+                                                  \[ B = M \times 0.09 \times 2
+                                                  = 0.18M \]
+                                             </p>
+                                             <p>
+                                                  \[ \text{Total} = M + 0.18M =
+                                                  1.18M \]
+                                             </p>
+
+                                             <p>
+                                                  <strong
+                                                       >Opsi B (Bunga
+                                                       Majemuk):</strong
+                                                  >
+                                             </p>
+                                             <p>
+                                                  \[ \text{Total} = M \times (1
+                                                  + 0.08)^2 = M \times 1.1664 \]
+                                             </p>
+
+                                             <p>
+                                                  <strong>Perbandingan:</strong>
+                                             </p>
+                                             <p>\[ 1.18M > 1.1664M \]</p>
+                                             <p>
+                                                  Jadi, bunga tunggal 9% lebih
+                                                  menguntungkan untuk periode 2
+                                                  tahun.
+                                             </p>
+                                             <p>
+                                                  <strong>Jawaban:</strong> Opsi
+                                                  A (Bunga Tunggal 9%)
+                                             </p>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="info-box">
+                    <h2>
+                         <i class="fas fa-lightbulb"></i> Tips Mengerjakan Soal
+                         Bunga Tunggal
+                    </h2>
+                    <ol>
+                         <li>
+                              Pastikan semua satuan waktu konsisten (biasanya
+                              dalam tahun)
+                         </li>
+                         <li>
+                              Konversi persentase bunga ke bentuk desimal
+                              sebelum menghitung
+                         </li>
+                         <li>
+                              Untuk soal yang mencari modal awal, gunakan rumus:
+                              \( M = \frac{\text{Total}}{1 + p \times t} \)
+                         </li>
+                         <li>
+                              Untuk soal yang mencari waktu, gunakan rumus: \( t
+                              = \frac{B}{M \times p} \)
+                         </li>
+                         <li>
+                              Perhatikan perbedaan bunga tunggal dan majemuk
+                              dalam soal perbandingan
+                         </li>
+                    </ol>
+
+                    <a
+                         href="https://wayground.com/join?c=UnyxT1PQqhYWHBbjzvVClRjVlGJq5_7xlqmIg-cfJe-KhHO6toqdwSesoXf4CG8PoF--9Xg-1reCQ_PSbhjkpqgzvAD39R2Paff1QjCs0mMOCZrosBMIsA7lEv3ZCHfkDK3ct7WMleMapkYPI5mdiwuZmyweg1iXz8rgt9RI2gC1d57MLGEtfDgTbhEPrgQSQnqZuV2iEWvOSoX1xuAU5jV-ow._OtZF7va6YTqCJnpnB_RiQ.16rpvejE3s6mnhZt&linktype=web&authuser=0"
+                         target="_blank"
+                         class="btn btn-success"
+                         ><i class="fas fa-download"></i> Kerjakan Quiz</a
+                    >
+               </div>
+
+               <footer>
+                    <p>© 2025 Pelajaran Matematika - Materi Bunga Tunggal</p>
+                    <p>
+                         Made with
+                         <svg height="20" viewBox="0 0 24 24" width="20">
+                              <path
+                                   d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
+                                   fill="#B71C1C"
+                              ></path>
+                         </svg>
+                         by Sir Aan Junaidi
+                    </p>
+               </footer>
+          </div>
+
+          <script>
+               document.addEventListener('DOMContentLoaded', function () {
+                    const solutionButtons =
+                         document.querySelectorAll('.btn-show-solution');
+
+                    solutionButtons.forEach((button) => {
+                         button.addEventListener('click', function () {
+                              const targetId = this.getAttribute('data-target');
+                              const solution =
+                                   document.getElementById(targetId);
+
+                              solution.classList.toggle('show');
+
+                              if (solution.classList.contains('show')) {
+                                   this.textContent = 'Sembunyikan Solusi';
+                              } else {
+                                   this.textContent = 'Tampilkan Solusi';
+                              }
+                         });
+                    });
+               });
+          </script>
+     </body>
+</html>

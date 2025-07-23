@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Bunga Tunggal</title>
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               :root {
+                    --primary: #3498db;
+                    --secondary: #2c3e50;
+                    --accent: #e74c3c;
+                    --light: #ecf0f1;
+                    --dark: #34495e;
+                    --success: #2ecc71;
+                    --purple: #9b59b6;
+               }
+
+               * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+               }
+
+               body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    background: linear-gradient(
+                         135deg,
+                         #f5f7fa 0%,
+                         #e4edf5 100%
+                    );
+                    padding: 20px;
+               }
+
+               .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+               }
+
+               header {
+                    text-align: center;
+                    padding: 40px 20px;
+                    background: linear-gradient(
+                         120deg,
+                         var(--secondary),
+                         var(--primary)
+                    );
+                    color: white;
+                    border-radius: 15px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                    position: relative;
+                    overflow: hidden;
+               }
+
+               header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: radial-gradient(
+                              circle at 10% 20%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         ),
+                         radial-gradient(
+                              circle at 90% 80%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         );
+               }
+
+               header h1 {
+                    font-size: 2.8rem;
+                    margin-bottom: 15px;
+                    position: relative;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+               }
+
+               header p {
+                    font-size: 1.3rem;
+                    opacity: 0.9;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    position: relative;
+               }
+
+               .info-box {
+                    background: white;
+                    border-radius: 15px;
+                    padding: 25px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                    border-left: 5px solid var(--primary);
+                    position: relative;
+               }
+
+               .info-box h2 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .info-box h2::before {
+                    content: '';
+                    display: inline-block;
+                    width: 8px;
+                    height: 30px;
+                    background: var(--primary);
+                    margin-right: 15px;
+                    border-radius: 4px;
+               }
+
+               .learning-objectives {
+                    background: linear-gradient(to right, #fff8e1, #fffde7);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                    border-left: 5px solid #ffc107;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+               }
+
+               .learning-objectives h2 {
+                    color: #ff8f00;
+                    margin-bottom: 25px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .learning-objectives h2 i {
+                    margin-right: 15px;
+                    color: #ff8f00;
+               }
+
+               .learning-objectives ul {
+                    padding-left: 20px;
+               }
+
+               .learning-objectives li {
+                    margin-bottom: 12px;
+                    position: relative;
+                    padding-left: 30px;
+                    font-size: 1.1rem;
+               }
+
+               .learning-objectives li::before {
+                    content: '✓';
+                    position: absolute;
+                    left: 0;
+                    color: var(--success);
+                    font-weight: bold;
+               }
+
+               .grid-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 30px;
+                    margin-bottom: 40px;
+               }
+
+               .card {
+                    background: white;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    transition: all 0.4s ease;
+                    position: relative;
+                    border: 1px solid #e0e0e0;
+               }
+
+               .card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+               }
+
+               .card-header {
+                    background: linear-gradient(
+                         120deg,
+                         var(--primary),
+                         #1a6ca6
+                    );
+                    color: white;
+                    padding: 20px;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .card-header i {
+                    margin-right: 12px;
+                    font-size: 1.8rem;
+               }
+
+               .card-body {
+                    padding: 25px;
+               }
+
+               table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+               }
+
+               th,
+               td {
+                    border: 1px solid #e0e0e0;
+                    padding: 14px;
+                    text-align: left;
+               }
+
+               th {
+                    background-color: var(--secondary);
+                    color: white;
+                    font-weight: 600;
+               }
+
+               tr:nth-child(even) {
+                    background-color: #f8fafc;
+               }
+
+               tr:hover {
+                    background-color: #f1f8ff;
+               }
+
+               .example-box {
+                    background: linear-gradient(to right, #e8f4fc, #e3f2fd);
+                    border-radius: 12px;
+                    padding: 25px;
+                    margin: 25px 0;
+                    border-left: 5px solid var(--primary);
+                    position: relative;
+               }
+
+               .example-box h3 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.6rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .example-box h3 i {
+                    margin-right: 10px;
+                    color: var(--primary);
+               }
+
+               .exercise-box {
+                    background: linear-gradient(to right, #f9f9f9, #f5f9ff);
+                    border-radius: 12px;
+                    padding: 25px;
+                    margin: 25px 0;
+                    border-left: 5px solid var(--success);
+               }
+
+               .exercise-box h3 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.6rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .exercise-box h3 i {
+                    margin-right: 10px;
+                    color: var(--success);
+               }
+
+               .btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: var(--primary);
+                    color: white;
+                    padding: 14px 28px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 1.05rem;
+                    font-weight: bold;
+                    transition: all 0.3s;
+                    text-decoration: none;
+                    margin: 15px 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .btn:hover {
+                    background: var(--secondary);
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+               }
+
+               .btn i {
+                    margin-right: 8px;
+               }
+
+               .btn-success {
+                    background: var(--success);
+               }
+
+               .btn-success:hover {
+                    background: #27ae60;
+               }
+
+               .btn-purple {
+                    background: var(--purple);
+               }
+
+               .btn-purple:hover {
+                    background: #8e44ad;
+               }
+
+               .solution {
+                    background: #e8f5e9;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                    display: none;
+                    border-left: 4px solid var(--success);
+               }
+
+               .solution.show {
+                    display: block;
+                    animation: fadeIn 0.5s ease;
+               }
+
+               @keyframes fadeIn {
+                    from {
+                         opacity: 0;
+                         transform: translateY(10px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+
+               .highlight {
+                    background: linear-gradient(to right, #fff9c4, #fffde7);
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                    font-weight: 600;
+                    border-left: 3px solid #ffd600;
+               }
+
+               .prerequisite-section {
+                    background: linear-gradient(to right, #f3e5f5, #f8f4ff);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                    border-left: 5px solid var(--purple);
+               }
+
+               .prerequisite-section h2 {
+                    color: var(--purple);
+                    margin-bottom: 25px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .prerequisite-section h2 i {
+                    margin-right: 15px;
+               }
+
+               footer {
+                    text-align: center;
+                    padding: 30px;
+                    margin-top: 50px;
+                    color: var(--dark);
+                    font-size: 1rem;
+                    background: white;
+                    border-radius: 15px;
+                    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+               }
+
+               .progress-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: 30px 0;
+               }
+
+               .progress-step {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: var(--primary);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    margin: 0 15px;
+                    position: relative;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .progress-step::after {
+                    content: '';
+                    position: absolute;
+                    width: 50px;
+                    height: 4px;
+                    background: var(--primary);
+                    right: -50px;
+                    top: 50%;
+                    transform: translateY(-50%);
+               }
+
+               .progress-step:last-child::after {
+                    display: none;
+               }
+
+               .progress-label {
+                    position: absolute;
+                    bottom: -30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                    font-size: 0.9rem;
+                    color: var(--dark);
+                    font-weight: 500;
+               }
+
+               @media (max-width: 768px) {
+                    .grid-container {
+                         grid-template-columns: 1fr;
+                    }
+
+                    header h1 {
+                         font-size: 2.2rem;
+                    }
+
+                    .progress-step::after {
+                         width: 30px;
+                         right: -30px;
+                    }
+               }
+          </style>
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          />
+     </head>
+     <body>
+          <div class="container">
+               <header>
+                    <h1><i class="fas fa-percentage"></i> Bunga Tunggal</h1>
+                    <p>Materi Lengkap Beserta Contoh Soal</p>
+               </header>
+
+               <div class="info-box">
+                    <h2><i class="fas fa-info-circle"></i> Panduan Belajar</h2>
+                    <p>
+                         Pelajari materi bunga tunggal secara sistematis berikut
+                         . Fokus pada pemahaman konsep dasar, rumus, dan
+                         aplikasi bunga tunggal dalam berbagai tipe soal
+                         keuangan.
+                    </p>
+               </div>
+
+               <!-- Tujuan Pembelajaran Section -->
+               <div class="learning-objectives">
+                    <h2><i class="fas fa-bullseye"></i> Tujuan Pembelajaran</h2>
+                    <p>
+                         Setelah mempelajari materi ini, siswa diharapkan mampu:
+                    </p>
+                    <ul>
+                         <li>
+                              Memahami konsep dasar bunga tunggal dan
+                              komponen-komponennya (modal, suku bunga, waktu)
+                         </li>
+                         <li>
+                              Menghitung bunga tunggal menggunakan rumus
+                              <span class="math"
+                                   >\( B = M \times p \times t \)</span
+                              >
+                              dalam berbagai skenario
+                         </li>
+                         <li>
+                              Menerapkan konsep bunga tunggal dalam masalah
+                              keuangan sehari-hari seperti tabungan dan pinjaman
+                         </li>
+
+                         <li>
+                              Menyelesaikan soal cerita yang melibatkan
+                              perhitungan bunga tunggal
+                         </li>
+                    </ul>
+               </div>
+
+               <div class="prerequisite-section">
+                    <h2><i class="fas fa-book"></i> Materi Prasyarat</h2>
+                    <p>
+                         Sebelum mempelajari bunga tunggal, pastikan Anda
+                         memahami materi prasyarat berikut:
+                    </p>
+                    <br />
+                    <div class="card">
+                         <div class="card-header">
+                              <i class="fas fa-percent"></i> Persentase dan
+                              Desimal
+                         </div>
+                         <div class="card-body">
+                              <p>
+                                   Bunga biasanya dinyatakan dalam bentuk
+                                   persentase. Konversi antara persentase dan
+                                   desimal sangat penting dalam perhitungan
+                                   bunga.
+                              </p>
+                              <p>
+                                   \[ \text{Desimal} =
+                                   \frac{\text{Persentase}}{100} \]
+                              </p>
+                              <p>Contoh: \( 8\% = 0.08 \)</p>
+
+                              <div class="example-box">
+                                   <h3>
+                                        <i class="fas fa-lightbulb"></i> Contoh
+                                        Soal
+                                   </h3>
+                                   <p>
+                                        Konversikan 5.5% ke bentuk desimal dan
+                                        hitung 5.5% dari Rp200.000
+                                   </p>
+                                   <button
+                                        class="btn btn-show-solution"
+                                        data-target="sol0"
+                                   >
+                                        Tampilkan Solusi
+                                   </button>
+                                   <div class="solution" id="sol0">
+                                        <p>
+                                             \[ 5.5\% = \frac{5.5}{100} = 0.055
+                                             \]
+                                        </p>
+                                        <p>
+                                             \[ 0.055 \times 200.000 =
+                                             \text{Rp}11.000 \]
+                                        </p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="grid-container">
+                    <!-- Bunga Tunggal Card -->
+                    <div class="card">
+                         <div class="card-header">
+                              <i class="fas fa-money-bill-wave"></i> Konsep
+                              Bunga Tunggal
+                         </div>
+                         <div class="card-body">
+                              <h3>Definisi Bunga Tunggal</h3>
+                              <p>
+                                   Bunga tunggal adalah bunga yang dihitung
+                                   hanya berdasarkan modal awal selama periode
+                                   tertentu.
+                              </p>
+                              <p>Rumus bunga tunggal:</p>
+                              <p>\[ \boxed{B = M \times p \times t} \]</p>
+                              <p>Dimana:</p>
+                              <ul>
+                                   <li>\( B \) = Besar bunga</li>
+                                   <li>\( M \) = Modal awal (pokok)</li>
+                                   <li>\( p \) = Suku bunga (dalam desimal)</li>
+                                   <li>\( t \) = Waktu (dalam tahun)</li>
+                              </ul>
+
+                              <div class="example-box">
+                                   <h3>
+                                        <i class="fas fa-lightbulb"></i> Contoh
+                                        Soal
+                                   </h3>
+                                   <p>
+                                        Pak Budi menabung Rp5.000.000 dengan
+                                        bunga tunggal 8% per tahun. Berapa total
+                                        uangnya setelah 3 tahun?
+                                   </p>
+                                   <button
+                                        class="btn btn-show-solution"
+                                        data-target="sol1"
+                                   >
+                                        Tampilkan Solusi
+                                   </button>
+                                   <div class="solution" id="sol1">
+                                        <p>\[ B = M \times p \times t \]</p>
+                                        <p>
+                                             \[ B = 5.000.000 \times 0.08 \times
+                                             3 = \text{Rp}1.200.000 \]
+                                        </p>
+                                        <p>
+                                             \[ \text{Total} = M + B = 5.000.000
+                                             + 1.200.000 = \text{Rp}6.200.000 \]
+                                        </p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <!-- Perbedaan Bunga Card -->
+                    <div class="card">
+                         <div class="card-header">
+                              <i class="fas fa-balance-scale"></i>
+                         </div>
+                         <div class="card-body">
+                              <div class="example-box">
+                                   <h3>
+                                        <i class="fas fa-lightbulb"></i> Contoh
+                                        Soal
+                                   </h3>
+                                   <p>
+                                        Hitung bunga tunggal dan majemuk untuk
+                                        modal Rp1.000.000 dengan bunga 10% per
+                                        tahun selama 3 tahun
+                                   </p>
+                                   <button
+                                        class="btn btn-show-solution"
+                                        data-target="sol2"
+                                   >
+                                        Tampilkan Solusi
+                                   </button>
+                                   <div class="solution" id="sol2">
+                                        <p><strong>Bunga Tunggal:</strong></p>
+                                        <p>
+                                             \[ B = ............... \times
+                                             ........ \times ...... =
+                                             \text{Rp}............ \]
+                                        </p>
+                                        <p>
+                                             \[ \text{Total} = .......... +
+                                             ........ = \text{Rp}..............
+                                             \]
+                                        </p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="example-box">
+                    <h3>
+                         <i class="fas fa-lightbulb"></i> Siap Latihan Soal?
+                         Klik Tombol berikut ini
+                    </h3>
+                    <a
+                         href="./latsol.html"
+                         class="btn btn-show-solution"
+                         target="_blank"
+                         >Latihan Soal</a
+                    >
+               </div>
+
+               <footer>
+                    <p>© 2025 Pelajaran Matematika - Materi Bunga Tunggal</p>
+                    <p>
+                         Made with
+                         <svg height="20" viewBox="0 0 24 24" width="20">
+                              <path
+                                   d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"
+                                   fill="#B71C1C"
+                              ></path>
+                         </svg>
+                         by Sir Aan Junaidi
+                    </p>
+               </footer>
+          </div>
+
+          <script>
+               document.addEventListener('DOMContentLoaded', function () {
+                    const solutionButtons =
+                         document.querySelectorAll('.btn-show-solution');
+
+                    solutionButtons.forEach((button) => {
+                         button.addEventListener('click', function () {
+                              const targetId = this.getAttribute('data-target');
+                              const solution =
+                                   document.getElementById(targetId);
+
+                              solution.classList.toggle('show');
+
+                              if (solution.classList.contains('show')) {
+                                   this.textContent = 'Sembunyikan Solusi';
+                              } else {
+                                   this.textContent = 'Tampilkan Solusi';
+                              }
+                         });
+                    });
+               });
+          </script>
+     </body>
+</html>
