@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Persiapan ANBK Numerasi: Sistem Persamaan Linear</title>
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               :root {
+                    --primary: #3498db;
+                    --secondary: #2c3e50;
+                    --accent: #e74c3c;
+                    --light: #ecf0f1;
+                    --dark: #34495e;
+                    --success: #2ecc71;
+                    --purple: #9b59b6;
+               }
+
+               * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+               }
+
+               body {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                    background: linear-gradient(
+                         135deg,
+                         #f5f7fa 0%,
+                         #e4edf5 100%
+                    );
+                    padding: 20px;
+               }
+
+               .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+               }
+
+               header {
+                    text-align: center;
+                    padding: 40px 20px;
+                    background: linear-gradient(
+                         120deg,
+                         var(--secondary),
+                         var(--primary)
+                    );
+                    color: white;
+                    border-radius: 15px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                    position: relative;
+                    overflow: hidden;
+               }
+
+               header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: radial-gradient(
+                              circle at 10% 20%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         ),
+                         radial-gradient(
+                              circle at 90% 80%,
+                              rgba(255, 255, 255, 0.1) 0%,
+                              transparent 20%
+                         );
+               }
+
+               header h1 {
+                    font-size: 2.8rem;
+                    margin-bottom: 15px;
+                    position: relative;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+               }
+
+               header p {
+                    font-size: 1.3rem;
+                    opacity: 0.9;
+                    max-width: 800px;
+                    margin: 0 auto;
+                    position: relative;
+               }
+
+               .info-box {
+                    background: white;
+                    border-radius: 15px;
+                    padding: 25px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                    border-left: 5px solid var(--primary);
+                    position: relative;
+               }
+
+               .info-box h2 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .info-box h2::before {
+                    content: '';
+                    display: inline-block;
+                    width: 8px;
+                    height: 30px;
+                    background: var(--primary);
+                    margin-right: 15px;
+                    border-radius: 4px;
+               }
+
+               .grid-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                    gap: 30px;
+                    margin-bottom: 40px;
+               }
+
+               .card {
+                    background: white;
+                    border-radius: 15px;
+                    overflow: hidden;
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    transition: all 0.4s ease;
+                    position: relative;
+                    border: 1px solid #e0e0e0;
+               }
+
+               .card:hover {
+                    transform: translateY(-10px);
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+               }
+
+               .card-header {
+                    background: linear-gradient(
+                         120deg,
+                         var(--primary),
+                         #1a6ca6
+                    );
+                    color: white;
+                    padding: 20px;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .card-header i {
+                    margin-right: 12px;
+                    font-size: 1.8rem;
+               }
+
+               .card-body {
+                    padding: 25px;
+               }
+
+               table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+               }
+
+               th,
+               td {
+                    border: 1px solid #e0e0e0;
+                    padding: 14px;
+                    text-align: left;
+               }
+
+               th {
+                    background-color: var(--secondary);
+                    color: white;
+                    font-weight: 600;
+               }
+
+               tr:nth-child(even) {
+                    background-color: #f8fafc;
+               }
+
+               tr:hover {
+                    background-color: #f1f8ff;
+               }
+
+               .example-box {
+                    background: linear-gradient(to right, #e8f4fc, #e3f2fd);
+                    border-radius: 12px;
+                    padding: 25px;
+                    margin: 25px 0;
+                    border-left: 5px solid var(--primary);
+                    position: relative;
+               }
+
+               .example-box h3 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.6rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .example-box h3 i {
+                    margin-right: 10px;
+                    color: var(--primary);
+               }
+
+               .exercise-box {
+                    background: linear-gradient(to right, #f9f9f9, #f5f9ff);
+                    border-radius: 12px;
+                    padding: 25px;
+                    margin: 25px 0;
+                    border-left: 5px solid var(--success);
+               }
+
+               .exercise-box h3 {
+                    color: var(--secondary);
+                    margin-bottom: 20px;
+                    font-size: 1.6rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .exercise-box h3 i {
+                    margin-right: 10px;
+                    color: var(--success);
+               }
+
+               .btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: var(--primary);
+                    color: white;
+                    padding: 14px 28px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 1.05rem;
+                    font-weight: bold;
+                    transition: all 0.3s;
+                    text-decoration: none;
+                    margin: 15px 8px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .btn:hover {
+                    background: var(--secondary);
+                    transform: translateY(-3px);
+                    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+               }
+
+               .btn i {
+                    margin-right: 8px;
+               }
+
+               .btn-success {
+                    background: var(--success);
+               }
+
+               .btn-success:hover {
+                    background: #27ae60;
+               }
+
+               .btn-purple {
+                    background: var(--purple);
+               }
+
+               .btn-purple:hover {
+                    background: #8e44ad;
+               }
+
+               .solution {
+                    background: #e8f5e9;
+                    padding: 20px;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                    display: none;
+                    border-left: 4px solid var(--success);
+               }
+
+               .solution.show {
+                    display: block;
+                    animation: fadeIn 0.5s ease;
+               }
+
+               @keyframes fadeIn {
+                    from {
+                         opacity: 0;
+                         transform: translateY(10px);
+                    }
+                    to {
+                         opacity: 1;
+                         transform: translateY(0);
+                    }
+               }
+
+               .highlight {
+                    background: linear-gradient(to right, #fff9c4, #fffde7);
+                    padding: 4px 8px;
+                    border-radius: 5px;
+                    font-weight: 600;
+                    border-left: 3px solid #ffd600;
+               }
+
+               .prerequisite-section {
+                    background: linear-gradient(to right, #f3e5f5, #f8f4ff);
+                    border-radius: 15px;
+                    padding: 30px;
+                    margin: 30px 0;
+                    border-left: 5px solid var(--purple);
+               }
+
+               .prerequisite-section h2 {
+                    color: var(--purple);
+                    margin-bottom: 25px;
+                    font-size: 1.9rem;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .prerequisite-section h2 i {
+                    margin-right: 15px;
+               }
+
+               footer {
+                    text-align: center;
+                    padding: 30px;
+                    margin-top: 50px;
+                    color: var(--dark);
+                    font-size: 1rem;
+                    background: white;
+                    border-radius: 15px;
+                    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+               }
+
+               .progress-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: 30px 0;
+               }
+
+               .progress-step {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: var(--primary);
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-weight: bold;
+                    margin: 0 15px;
+                    position: relative;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+               }
+
+               .progress-step::after {
+                    content: '';
+                    position: absolute;
+                    width: 50px;
+                    height: 4px;
+                    background: var(--primary);
+                    right: -50px;
+                    top: 50%;
+                    transform: translateY(-50%);
+               }
+
+               .progress-step:last-child::after {
+                    display: none;
+               }
+
+               .progress-label {
+                    position: absolute;
+                    bottom: -30px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    white-space: nowrap;
+                    font-size: 0.9rem;
+                    color: var(--dark);
+                    font-weight: 500;
+               }
+
+               @media (max-width: 768px) {
+                    .grid-container {
+                         grid-template-columns: 1fr;
+                    }
+
+                    header h1 {
+                         font-size: 2.2rem;
+                    }
+
+                    .progress-step::after {
+                         width: 30px;
+                         right: -30px;
+                    }
+               }
+          </style>
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          />
+     </head>
+     <body>
+          <div class="container">
+               <header>
+                    <h1>
+                         <i class="fas fa-equation"></i> Persiapan ANBK
+                         Numerasi: Sistem Persamaan Linear
+                    </h1>
+                    <p>Materi Lengkap untuk SPL 2 Variabel dan 3 Variabel</p>
+               </header>
+
+               <div class="info-box">
+                    <h2><i class="fas fa-info-circle"></i> Panduan Belajar</h2>
+                    <p>
+                         Pelajari materi Sistem Persamaan Linear (SPL) berikut
+                         untuk persiapan ANBK Numerasi. Fokus pada metode
+                         penyelesaian dan aplikasi dalam soal cerita.
+                    </p>
+               </div>
+
+               <div class="prerequisite-section">
+                    <h2><i class="fas fa-book"></i> Materi Prasyarat</h2>
+                    <p>Sebelum mempelajari SPL, pastikan Anda memahami:</p>
+
+                    <div class="card">
+                         <div class="card-header">
+                              <i class="fas fa-x"></i> Persamaan Linear Satu
+                              Variabel
+                         </div>
+                         <div class="card-body">
+                              <p>
+                                   Bentuk umum: \( ax + b = 0 \), dengan \( a
+                                   \neq 0 \).
+                              </p>
+                              <p>Contoh: \( 3x - 6 = 0 \Rightarrow x = 2 \).</p>
+
+                              <div class="example-box">
+                                   <h3>
+                                        <i class="fas fa-lightbulb"></i> Contoh
+                                        Soal
+                                   </h3>
+                                   <p>Selesaikan: \( 5x + 10 = 3x - 2 \).</p>
+                                   <button
+                                        class="btn btn-show-solution"
+                                        data-target="sol0"
+                                   >
+                                        Tampilkan Solusi
+                                   </button>
+                                   <div class="solution" id="sol0">
+                                        <p>\[ 5x - 3x = -2 - 10 \]</p>
+                                        <p>\[ 2x = -12 \]</p>
+                                        <p>\[ x = -6 \]</p>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="grid-container">
+                    <!-- SPL 2 Variabel Card -->
+                    <div class="card">
+                         <div class="card-header">
+                              <i class="fas fa-x-y"></i> SPL 2 Variabel
+                         </div>
+                         <div class="card-body">
+                              <h3>Bentuk Umum</h3>
+                              <p>
+                                   \[ \begin{cases} a_1x + b_1y = c_1 \\ a_2x +
+                                   b_2y = c_2 \end{cases} \]
+                              </p>
+
+                              <h3>Metode Penyelesaian</h3>
+                              <table>
+                                   <tr>
+                                        <th>Metode</th>
+                                        <th>Konsep</th>
+                                        <th>Contoh</th>
+                                   </tr>
+                                   <tr>
+                                        <td>Substitusi</td>
+                                        <td>
+                                             Nyatakan satu variabel dalam
+                                             variabel lain, lalu substitusi.
+                                        </td>
+                                        <td>
+                                             \[ \begin{cases} x + y = 5 \\ 2x -
+                                             y = 1 \end{cases} \]
+                                        </td>
+                                   </tr>
+                                   <tr>
+                                        <td>Eliminasi</td>
+                                        <td>
+                                             Hilangkan satu variabel dengan
+                                             operasi penjumlahan/pengurangan.
+                                        </td>
+                                        <td>
+                                             \[ \begin{cases} 3x + 2y = 12 \\ x
+                                             - y = 1 \end{cases} \]
+                                        </td>
+                                   </tr>
+                                   <tr>
+                                        <td>Grafik</td>
+                                        <td>
+                                             Cari titik potong dua garis pada
+                                             bidang kartesius.
+                                        </td>
+                                        <td>-</td>
+                                   </tr>
+                              </table>
+
+                              <div class="example-box">
+                                   <h3>
+                                        <i class="fas fa-lightbulb"></i> Contoh
+                                        Soal Cerita
+                                   </h3>
+                                   <p>
+                                        Andi membeli 3 buku dan 2 pensil seharga
+                                        Rp11.000,00. Di toko yang sama, Budi
+                                        membeli 2 buku dan 3 pensil seharga
+                                        Rp9.000,00. Berapa harga 1 buku dan 1
+                                        pensil?
+                                   </p>
+
+                                   <p><strong>Penyelesaian:</strong></p>
+                                   <p>
+                                        Misalkan: <br />- Harga 1 buku = \( x \)
+                                        rupiah <br />- Harga 1 pensil = \( y \)
+                                        rupiah
+                                   </p>
+                                   <p>SPL yang terbentuk:</p>
+                                   \[ \begin{cases} 3x + 2y = 11.000 \\ 2x + 3y
+                                   = 9.000 \end{cases} \]
+
+                                   <button
+                                        class="btn btn-show-solution"
+                                        data-target="sol1"
+                                   >
+                                        Tampilkan Solusi
+                                   </button>
+                                   <div class="solution" id="sol1">
+                                        <p>
+                                             <strong>Langkah 1:</strong>
+                                             Eliminasi \( x \) dengan menyamakan
+                                             koefisien:
+                                        </p>
+                                        \[ \begin{cases} 3x + 2y = 11.000 \quad
+                                        (\times 2) \\ 2x + 3y = 9.000 \quad
+                                        (\times 3) \end{cases} \] \[
+                                        \begin{cases} 6x + 4y = 22.000 \\ 6x +
+                                        9y = 27.000 \end{cases} \]
+
+                                        <p>
+                                             <strong>Langkah 2:</strong>
+                                             Kurangkan persamaan pertama dari
+                                             kedua:
+                                        </p>
+                                        \[ (6x + 9y) - (6x + 4y) = 27.000 -
+                                        22.000 \] \[ 5y = 5.000 \Rightarrow y =
+                                        1.000 \]
+
+                                        <p>
+                                             <strong>Langkah 3:</strong>
+                                             Substitusi \( y = 1.000 \) ke
+                                             persamaan pertama:
+                                        </p>
+                                        \[ 3x + 2(1.000) = 11.000 \] \[ 3x =
+                                        9.000 \Rightarrow x = 3.000 \]
+
+                                        <p><strong>Solusi:</strong></p>
+                                        <ul>
+                                             <li>Harga 1 buku = Rp3.000,00</li>
+                                             <li>
+                                                  Harga 1 pensil = Rp1.000,00
+                                             </li>
+                                        </ul>
+                                        \[ \boxed{x = 3.000 \text{ dan } y =
+                                        1.000} \]
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <!-- SPL 3 Variabel Card -->
+                    <div class="card">
+                         <div class="card-header">
+                              <i class="fas fa-x-y-z"></i> SPL 3 Variabel
+                         </div>
+                         <div class="card-body">
+                              <h3>Bentuk Umum</h3>
+                              <p>
+                                   \[ \begin{cases} a_1x + b_1y + c_1z = d_1 \\
+                                   a_2x + b_2y + c_2z = d_2 \\ a_3x + b_3y +
+                                   c_3z = d_3 \end{cases} \]
+                              </p>
+
+                              <h3>Metode Penyelesaian</h3>
+                              <table>
+                                   <tr>
+                                        <th>Metode</th>
+                                        <th>Konsep</th>
+                                        <th>Contoh</th>
+                                   </tr>
+                                   <tr>
+                                        <td>Eliminasi-Substitusi</td>
+                                        <td>
+                                             Eliminasi satu variabel hingga
+                                             menjadi SPL 2 variabel.
+                                        </td>
+                                        <td>
+                                             \[ \begin{cases} x + y + z = 6 \\
+                                             2x - y + z = 3 \\ x + 2y - z = 2
+                                             \end{cases} \]
+                                        </td>
+                                   </tr>
+                                   <tr>
+                                        <td>Matriks (Determinan)</td>
+                                        <td>
+                                             Gunakan aturan Cramer atau invers
+                                             matriks.
+                                        </td>
+                                        <td>-</td>
+                                   </tr>
+                              </table>
+
+                              <div class="example-box">
+                                   <h3>
+                                        <i class="fas fa-lightbulb"></i> Contoh
+                                        Soal Cerita (SPL 3 Variabel)
+                                   </h3>
+                                   <p>
+                                        Di sebuah toko buah, Ana membeli 2 apel,
+                                        3 jeruk, dan 1 mangga seharga Rp33.000.
+                                        Budi membeli 1 apel, 4 jeruk, dan 2
+                                        mangga seharga Rp43.000. Citra membeli 3
+                                        apel, 2 jeruk, dan 1 mangga seharga
+                                        Rp37.000. Berapa harga masing-masing
+                                        buah per buah?
+                                   </p>
+
+                                   <p><strong>Penyelesaian:</strong></p>
+                                   <p>
+                                        Misalkan: <br />- Harga 1 apel = \( a \)
+                                        rupiah <br />- Harga 1 jeruk = \( j \)
+                                        rupiah <br />- Harga 1 mangga = \( m \)
+                                        rupiah
+                                   </p>
+                                   <p>SPL yang terbentuk:</p>
+                                   \[ \begin{cases} 2a + 3j + m = 33.000 \quad
+                                   \text{(Ana)} \\ a + 4j + 2m = 43.000 \quad
+                                   \text{(Budi)} \\ 3a + 2j + m = 37.000 \quad
+                                   \text{(Citra)} \end{cases} \]
+
+                                   <button
+                                        class="btn btn-show-solution"
+                                        data-target="sol2"
+                                   >
+                                        Tampilkan Solusi
+                                   </button>
+                                   <div class="solution" id="sol2">
+                                        <p>
+                                             <strong>Langkah 1:</strong>
+                                             Eliminasi \( m \) dari persamaan
+                                             Ana dan Citra:
+                                        </p>
+                                        \[ \begin{cases} 2a + 3j + m = 33.000 \\
+                                        3a + 2j + m = 37.000 \end{cases} \]
+                                        <p>
+                                             Kurangkan persamaan Ana dari Citra:
+                                        </p>
+                                        \[ (3a + 2j + m) - (2a + 3j + m) =
+                                        37.000 - 33.000 \] \[ a - j = 4.000
+                                        \quad \text{(Persamaan 4)} \]
+
+                                        <p>
+                                             <strong>Langkah 2:</strong>
+                                             Eliminasi \( m \) dari persamaan
+                                             Ana dan Budi:
+                                        </p>
+                                        \[ \begin{cases} 2a + 3j + m = 33.000
+                                        \quad (\times 2) \\ a + 4j + 2m = 43.000
+                                        \quad (\times 1) \end{cases} \] \[
+                                        \begin{cases} 4a + 6j + 2m = 66.000 \\ a
+                                        + 4j + 2m = 43.000 \end{cases} \]
+                                        <p>
+                                             Kurangkan persamaan kedua dari
+                                             pertama:
+                                        </p>
+                                        \[ 3a + 2j = 23.000 \quad
+                                        \text{(Persamaan 5)} \]
+
+                                        <p>
+                                             <strong>Langkah 3:</strong>
+                                             Substitusi \( a = j + 4.000 \)
+                                             (dari Persamaan 4) ke Persamaan 5:
+                                        </p>
+                                        \[ 3(j + 4.000) + 2j = 23.000 \] \[ 3j +
+                                        12.000 + 2j = 23.000 \] \[ 5j = 11.000
+                                        \Rightarrow j = 2.200 \]
+
+                                        <p>
+                                             <strong>Langkah 4:</strong> Cari \(
+                                             a \) dan \( m \):
+                                        </p>
+                                        \[ a = j + 4.000 = 2.200 + 4.000 = 6.200
+                                        \]
+                                        <p>
+                                             Substitusi \( a \) dan \( j \) ke
+                                             persamaan Ana:
+                                        </p>
+                                        \[ 2(6.200) + 3(2.200) + m = 33.000 \]
+                                        \[ 12.400 + 6.600 + m = 33.000 \] \[ m =
+                                        14.000 \]
+
+                                        <p><strong>Solusi:</strong></p>
+                                        <ul>
+                                             <li>Harga 1 apel = Rp6.200,00</li>
+                                             <li>Harga 1 jeruk = Rp2.200,00</li>
+                                             <li>
+                                                  Harga 1 mangga = Rp14.000,00
+                                             </li>
+                                        </ul>
+                                        \[ \boxed{a = 6.200,\; j = 2.200,\; m =
+                                        14.000} \]
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
+               <div class="exercise-box">
+                    <h3>
+                         <i class="fas fa-pencil-alt"></i> Latihan Soal Cerita
+                    </h3>
+
+                    <!-- Soal 1: SPL 2 Variabel -->
+                    <div class="problem">
+                         <p>
+                              1. Di sebuah taman bermain, harga tiket masuk
+                              untuk anak-anak dan dewasa berbeda. Rina membayar
+                              Rp85.000 untuk 3 tiket anak-anak dan 2 tiket
+                              dewasa. Sementara itu, Andi membayar Rp115.000
+                              untuk 2 tiket anak-anak dan 5 tiket dewasa. Berapa
+                              harga masing-masing tiket?
+                         </p>
+                         <p class="hint">
+                              Petunjuk: Misalkan harga tiket anak-anak = \( a \)
+                              dan dewasa = \( d \).
+                         </p>
+                         <button
+                              class="btn btn-show-solution"
+                              data-target="sol-ex1"
+                         >
+                              Tampilkan Solusi
+                         </button>
+                         <div class="solution" id="sol-ex1">
+                              <p><strong>SPL:</strong></p>
+                              \[ \begin{cases} 3a + 2d = 85.000 \\ 2a + 5d =
+                              115.000 \end{cases} \]
+                              <p>
+                                   <strong>Solusi:</strong> \( a = 15.000 \)
+                                   (anak), \( d = 20.000 \) (dewasa).
+                              </p>
+                         </div>
+                    </div>
+
+                    <!-- Soal 2: SPL 3 Variabel -->
+                    <div class="problem">
+                         <p>
+                              2. Sebuah restoran menjual paket makanan: Paket A
+                              (1 burger, 2 kentang, 1 minuman) seharga Rp65.000.
+                              Paket B (2 burger, 1 kentang, 3 minuman) seharga
+                              Rp90.000. Paket C (3 burger, 3 kentang, 2 minuman)
+                              seharga Rp140.000. Berapa harga satuan burger,
+                              kentang, dan minuman?
+                         </p>
+                         <p class="hint">
+                              Petunjuk: Misalkan harga burger = \( b \), kentang
+                              = \( k \), minuman = \( m \).
+                         </p>
+                         <button
+                              class="btn btn-show-solution"
+                              data-target="sol-ex2"
+                         >
+                              Tampilkan Solusi
+                         </button>
+                         <div class="solution" id="sol-ex2">
+                              <p><strong>SPL:</strong></p>
+                              \[ \begin{cases} b + 2k + m = 65.000 \\ 2b + k +
+                              3m = 90.000 \\ 3b + 3k + 2m = 140.000 \end{cases}
+                              \]
+                              <p>
+                                   <strong>Solusi:</strong> \( b = 25.000 \), \(
+                                   k = 15.000 \), \( m = 10.000 \).
+                              </p>
+                         </div>
+                    </div>
+
+                    <a href="./kuis.html" class="btn btn-success">
+                         <i class="fas fa-book-open"></i> Latihan Soal Lainnya
+                    </a>
+               </div>
+
+               <footer>
+                    <p>
+                         © 2025 Persiapan ANBK Numerasi - Sistem Persamaan
+                         Linear
+                    </p>
+                    <p>
+                         Made with
+                         <i class="fas fa-heart" style="color: #e74c3c"></i> By
+                         Sir Aan Junaidi
+                    </p>
+               </footer>
+          </div>
+
+          <script>
+               document.addEventListener('DOMContentLoaded', function () {
+                    const solutionButtons =
+                         document.querySelectorAll('.btn-show-solution');
+
+                    solutionButtons.forEach((button) => {
+                         button.addEventListener('click', function () {
+                              const targetId = this.getAttribute('data-target');
+                              const solution =
+                                   document.getElementById(targetId);
+
+                              solution.classList.toggle('show');
+
+                              if (solution.classList.contains('show')) {
+                                   this.textContent = 'Sembunyikan Solusi';
+                              } else {
+                                   this.textContent = 'Tampilkan Solusi';
+                              }
+                         });
+                    });
+               });
+          </script>
+     </body>
+</html>

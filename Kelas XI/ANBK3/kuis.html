@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="id">
+     <head>
+          <meta charset="UTF-8" />
+          <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1.0"
+          />
+          <title>Kuis ANBK SPL 2 dan 3 Variabel</title>
+          <link
+               rel="stylesheet"
+               href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          />
+          <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+          <script
+               id="MathJax-script"
+               async
+               src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+          ></script>
+          <style>
+               * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+               }
+
+               body {
+                    background: linear-gradient(135deg, #1a2980, #26d0ce);
+                    min-height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 20px;
+                    color: #333;
+               }
+
+               .container {
+                    max-width: 800px;
+                    width: 100%;
+                    background: rgba(255, 255, 255, 0.95);
+                    border-radius: 20px;
+                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+                    overflow: hidden;
+                    position: relative;
+               }
+
+               header {
+                    background: linear-gradient(90deg, #2c3e50, #4a6491);
+                    color: white;
+                    padding: 25px 30px;
+                    text-align: center;
+                    position: relative;
+               }
+
+               header h1 {
+                    font-size: 2.5rem;
+                    margin-bottom: 10px;
+                    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+               }
+
+               header p {
+                    font-size: 1.1rem;
+                    opacity: 0.9;
+                    max-width: 600px;
+                    margin: 0 auto;
+               }
+
+               .info-bar {
+                    display: flex;
+                    justify-content: space-between;
+                    background: #3498db;
+                    color: white;
+                    padding: 15px 30px;
+                    font-size: 1.1rem;
+                    font-weight: 500;
+               }
+
+               .progress-container {
+                    height: 8px;
+                    background: #e0e0e0;
+               }
+
+               .progress-bar {
+                    height: 100%;
+                    background: linear-gradient(90deg, #2ecc71, #27ae60);
+                    width: 0%;
+                    transition: width 0.5s ease;
+               }
+
+               .quiz-container {
+                    padding: 30px;
+                    min-height: 400px;
+               }
+
+               .question-section {
+                    margin-bottom: 30px;
+               }
+
+               .question-number {
+                    font-size: 1.1rem;
+                    color: #3498db;
+                    font-weight: 600;
+                    margin-bottom: 10px;
+               }
+
+               .question-text {
+                    font-size: 1.4rem;
+                    line-height: 1.6;
+                    margin-bottom: 25px;
+                    color: #2c3e50;
+               }
+
+               .options-container {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 15px;
+               }
+
+               .option {
+                    background: #f8f9fa;
+                    border: 2px solid #e0e0e0;
+                    border-radius: 12px;
+                    padding: 15px 20px;
+                    font-size: 1.1rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: flex;
+                    align-items: center;
+               }
+
+               .option:hover {
+                    background: #e3f2fd;
+                    border-color: #3498db;
+                    transform: translateY(-3px);
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+               }
+
+               .option.selected {
+                    background: #d1ecf1;
+                    border-color: #3498db;
+                    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+               }
+
+               .option.correct {
+                    background: #d4edda;
+                    border-color: #28a745;
+               }
+
+               .option.incorrect {
+                    background: #f8d7da;
+                    border-color: #dc3545;
+               }
+
+               .option-letter {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 35px;
+                    height: 35px;
+                    background: #3498db;
+                    color: white;
+                    border-radius: 50%;
+                    margin-right: 15px;
+                    flex-shrink: 0;
+                    font-weight: bold;
+               }
+
+               .navigation {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 20px 30px;
+                    background: #f8f9fa;
+                    border-top: 1px solid #e0e0e0;
+               }
+
+               .btn {
+                    padding: 12px 25px;
+                    font-size: 1.1rem;
+                    border: none;
+                    border-radius: 50px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-weight: 600;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+               }
+
+               .btn:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+               }
+
+               .btn-prev {
+                    background: #f1f1f1;
+                    color: #333;
+               }
+
+               .btn-prev:hover:not(:disabled) {
+                    background: #e0e0e0;
+               }
+
+               .btn-next {
+                    background: linear-gradient(90deg, #3498db, #2980b9);
+                    color: white;
+               }
+
+               .btn-next:hover:not(:disabled) {
+                    background: linear-gradient(90deg, #2980b9, #2573a7);
+                    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+               }
+
+               .btn-submit {
+                    background: linear-gradient(90deg, #2ecc71, #27ae60);
+                    color: white;
+               }
+
+               .btn-submit:hover:not(:disabled) {
+                    background: linear-gradient(90deg, #27ae60, #219653);
+                    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+               }
+
+               .result-container {
+                    padding: 40px;
+                    text-align: center;
+                    display: none;
+               }
+
+               .result-container h2 {
+                    font-size: 2.2rem;
+                    color: #2c3e50;
+                    margin-bottom: 20px;
+               }
+
+               .score {
+                    font-size: 5rem;
+                    font-weight: 800;
+                    background: linear-gradient(90deg, #3498db, #2ecc71);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    margin: 20px 0;
+               }
+
+               .score-message {
+                    font-size: 1.3rem;
+                    margin-bottom: 30px;
+                    color: #555;
+               }
+
+               .feedback {
+                    background: #f8f9fa;
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin: 30px 0;
+                    text-align: left;
+               }
+
+               .feedback h3 {
+                    color: #3498db;
+                    margin-bottom: 15px;
+                    text-align: center;
+               }
+
+               .feedback-item {
+                    margin: 15px 0;
+                    padding: 15px;
+                    border-radius: 10px;
+                    background: white;
+                    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+               }
+
+               .feedback-question {
+                    font-weight: 600;
+                    margin-bottom: 10px;
+                    color: #2c3e50;
+               }
+
+               .feedback-answer {
+                    color: #27ae60;
+                    font-weight: 500;
+               }
+
+               .feedback-explanation {
+                    margin-top: 10px;
+                    color: #555;
+                    font-size: 0.95rem;
+               }
+
+               .btn-restart {
+                    background: linear-gradient(90deg, #e74c3c, #c0392b);
+                    color: white;
+                    padding: 15px 35px;
+                    font-size: 1.2rem;
+                    margin-top: 20px;
+               }
+
+               .btn-restart:hover {
+                    background: linear-gradient(90deg, #c0392b, #a93226);
+                    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+               }
+
+               @media (max-width: 600px) {
+                    header h1 {
+                         font-size: 2rem;
+                    }
+
+                    .question-text {
+                         font-size: 1.2rem;
+                    }
+
+                    .option {
+                         padding: 12px 15px;
+                         font-size: 1rem;
+                    }
+
+                    .btn {
+                         padding: 10px 20px;
+                         font-size: 1rem;
+                    }
+
+                    .score {
+                         font-size: 4rem;
+                    }
+               }
+          </style>
+     </head>
+     <body>
+          <div class="container">
+               <header>
+                    <h1>
+                         <i class="fas fa-calculator"></i> Kuis Eksponen
+                         Matematika
+                    </h1>
+                    <p>
+                         Uji pemahaman Anda tentang konsep dasar dan sifat-sifat
+                         eksponen
+                    </p>
+               </header>
+
+               <div class="info-bar">
+                    <div class="timer">
+                         <i class="fas fa-clock"></i> Waktu:
+                         <span id="timer">10:00</span>
+                    </div>
+                    <div class="score-display">
+                         <i class="fas fa-star"></i> Skor:
+                         <span id="current-score">0</span>
+                    </div>
+               </div>
+
+               <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+               </div>
+
+               <div class="quiz-container" id="quiz-container">
+                    <!-- Konten kuis akan diisi oleh JavaScript -->
+               </div>
+
+               <div class="navigation">
+                    <button class="btn btn-prev" id="prev-btn" disabled>
+                         <i class="fas fa-arrow-left"></i> Sebelumnya
+                    </button>
+                    <button class="btn btn-next" id="next-btn">
+                         Berikutnya <i class="fas fa-arrow-right"></i>
+                    </button>
+               </div>
+
+               <div class="result-container" id="result-container">
+                    <h2><i class="fas fa-medal"></i> Hasil Kuis</h2>
+                    <div class="score" id="final-score">0</div>
+                    <div class="score-message" id="score-message"></div>
+
+                    <!-- <div class="feedback" id="feedback">
+                         <h3>Detail Jawaban</h3> -->
+                    <!-- Feedback akan diisi oleh JavaScript -->
+                    <!-- </div> -->
+
+                    <button class="btn btn-restart" id="restart-btn">
+                         <i class="fas fa-redo"></i> Kerjakan Lagi
+                    </button>
+               </div>
+          </div>
+
+          <script>
+               // Konfigurasi MathJax
+               MathJax = {
+                    tex: {
+                         inlineMath: [['\\(', '\\)']],
+                         displayMath: [['\\[', '\\]']],
+                         processEscapes: true,
+                         packages: { '[+]': ['ams'] },
+                    },
+                    options: {
+                         ignoreHtmlClass: 'tex2jax_ignore',
+                         processHtmlClass: 'tex2jax_process',
+                    },
+                    startup: {
+                         ready: () => {
+                              MathJax.startup.defaultReady();
+                              // Mulai aplikasi setelah MathJax siap
+                              initializeQuiz();
+                         },
+                    },
+               };
+
+               // Data kuis SPL
+               const quizData = [
+                    {
+                         question:
+                              'Di warung Bu Ani, 2 teh botol dan 3 kopi susu harganya Rp23.000. Jika 3 teh botol dan 2 kopi susu harganya Rp22.000, berapa harga 1 teh botol?',
+                         options: [
+                              'Rp3.000',
+                              'Rp4.000',
+                              'Rp5.000',
+                              'Rp6.000',
+                              'Rp7.000',
+                         ],
+                         answer: 1,
+                         explanation:
+                              'Misal teh = \( t \), kopi = \( k \). SPL: \[ \begin{cases} 2t + 3k = 23.000 \\ 3t + 2k = 22.000 \end{cases} \] Eliminasi \( k \): \[ \begin{cases} 4t + 6k = 46.000 \\ 9t + 6k = 66.000 \end{cases} \] Kurangkan: \( 5t = 20.000 \) → \( t = 4.000 \)',
+                    },
+                    {
+                         question:
+                              'Usia Ayah + Ibu = 65 tahun. Usia Ibu + Anak = 40 tahun. Usia Ayah + Anak = 53 tahun. Berapa usia Ibu?',
+                         options: [
+                              '26 tahun',
+                              '30 tahun',
+                              '32 tahun',
+                              '35 tahun',
+                              '39 tahun',
+                         ],
+                         answer: 0,
+                         explanation:
+                              'SPL: \[ \begin{cases} A + I = 65 \\ I + K = 40 \\ A + K = 53 \end{cases} \] Jumlahkan semua: \( 2(A+I+K) = 158 \) → \( A+I+K = 79 \). Kurangi dengan persamaan 3: \( I = 26 \)',
+                    },
+                    {
+                         question:
+                              'Sebuah toko menjual 3 pensil, 2 buku, dan 1 penggaris seharga Rp21.000. Jika 1 pensil dan 2 buku harganya Rp12.000, serta 2 penggaris dan 1 buku harganya Rp9.000, berapa harga 1 pensil?',
+                         options: [
+                              'Rp3.000',
+                              'Rp4.000',
+                              'Rp5.000',
+                              'Rp6.000',
+                              'Rp7.000',
+                         ],
+                         answer: 1, // Jawaban benar: Rp4.000
+                         explanation: `
+        <strong>SPL:</strong> 
+        \[ \begin{cases} 
+        3p + 2b + g = 21.000 \\ 
+        p + 2b = 12.000 \\ 
+        2g + b = 9.000 
+        \end{cases} \]
+        <strong>Langkah 1:</strong> Dari persamaan 2: \( p = 12.000 - 2b \).<br>
+        <strong>Langkah 2:</strong> Dari persamaan 3: \( b = 9.000 - 2g \).<br>
+        <strong>Langkah 3:</strong> Substitusi ke persamaan 1:<br>
+        \( 3(12.000 - 2b) + 2b + g = 21.000 \)<br>
+        \( 36.000 - 4b + g = 21.000 \)<br>
+        Substitusi \( b = 9.000 - 2g \):<br>
+        \( 36.000 - 4(9.000 - 2g) + g = 21.000 \)<br>
+        \( 36.000 - 36.000 + 8g + g = 21.000 \)<br>
+        \( 9g = 21.000 \implies g = 2.000 \)<br>
+        \( b = 9.000 - 2(2.000) = 5.000 \)<br>
+        \( p = 12.000 - 2(5.000) = 2.000 \)<br>
+        <strong>Hasil:</strong> \( p = \text{Rp}4.000 \).
+    `,
+                    },
+                    {
+                         question:
+                              'Diketahui \( x + y = 10 \) dan \( 2x - y = 5 \). Nilai \( y \) adalah...',
+                         options: ['3', '4', '5', '6', '7'],
+                         answer: 2,
+                         explanation:
+                              'Jumlahkan kedua persamaan: \( 3x = 15 \) → \( x = 5 \). Substitusi ke persamaan 1: \( 5 + y = 10 \) → \( y = 5 \)',
+                    },
+                    {
+                         question:
+                              'Di kebun binatang, jumlah kaki kambing dan ayam adalah 20. Jika jumlah hewan tersebut 8 ekor, berapa banyak kambing? (Kambing berkaki 4, ayam berkaki 2)',
+                         options: ['2', '3', '4', '5', '6'],
+                         answer: 0,
+                         explanation:
+                              'Misal kambing = \( k \), ayam = \( a \). SPL: \[ \begin{cases} 4k + 2a = 20 \\ k + a = 8 \end{cases} \] Substitusi \( a = 8 - k \): \( 4k + 2(8 - k) = 20 \) → \( k = 2 \)',
+                    },
+               ];
+
+               // Variabel aplikasi
+               let currentQuestion = 0;
+               let score = 0;
+               let userAnswers = new Array(quizData.length).fill(null);
+               let timeLeft = 600; // 10 menit dalam detik
+               let timerInterval;
+
+               // Elemen DOM
+               const quizContainer = document.getElementById('quiz-container');
+               const resultContainer =
+                    document.getElementById('result-container');
+               const prevBtn = document.getElementById('prev-btn');
+               const nextBtn = document.getElementById('next-btn');
+               const progressBar = document.getElementById('progress-bar');
+               const timerDisplay = document.getElementById('timer');
+               const currentScoreDisplay =
+                    document.getElementById('current-score');
+               const finalScoreDisplay = document.getElementById('final-score');
+               const scoreMessage = document.getElementById('score-message');
+               const feedbackContainer = document.getElementById('feedback');
+               const restartBtn = document.getElementById('restart-btn');
+
+               // Fungsi untuk memformat waktu (menit:detik)
+               function formatTime(seconds) {
+                    const minutes = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+               }
+
+               // Fungsi untuk memulai timer
+               function startTimer() {
+                    timerInterval = setInterval(() => {
+                         timeLeft--;
+                         timerDisplay.textContent = formatTime(timeLeft);
+
+                         if (timeLeft <= 0) {
+                              clearInterval(timerInterval);
+                              submitQuiz();
+                         }
+                    }, 1000);
+               }
+
+               // Fungsi untuk menampilkan soal
+               function showQuestion() {
+                    const question = quizData[currentQuestion];
+
+                    // Update progress bar
+                    const progress =
+                         ((currentQuestion + 1) / quizData.length) * 100;
+                    progressBar.style.width = `${progress}%`;
+
+                    // Tampilkan nomor soal
+                    const questionNumber = document.createElement('div');
+                    questionNumber.className = 'question-number';
+                    questionNumber.textContent = `Soal ${
+                         currentQuestion + 1
+                    } dari ${quizData.length}`;
+
+                    // Tampilkan pertanyaan
+                    const questionText = document.createElement('div');
+                    questionText.className = 'question-text';
+                    questionText.innerHTML = question.question;
+
+                    // Tampilkan pilihan jawaban
+                    const optionsContainer = document.createElement('div');
+                    optionsContainer.className = 'options-container';
+
+                    question.options.forEach((option, index) => {
+                         const optionElement = document.createElement('div');
+                         optionElement.className = 'option';
+                         if (userAnswers[currentQuestion] === index) {
+                              optionElement.classList.add('selected');
+                         }
+
+                         const optionLetter = document.createElement('div');
+                         optionLetter.className = 'option-letter';
+                         optionLetter.textContent = String.fromCharCode(
+                              65 + index
+                         ); // A, B, C, ...
+
+                         const optionText = document.createElement('div');
+                         optionText.className = 'option-text';
+                         optionText.innerHTML = option;
+
+                         optionElement.appendChild(optionLetter);
+                         optionElement.appendChild(optionText);
+
+                         optionElement.addEventListener('click', () => {
+                              userAnswers[currentQuestion] = index;
+                              showQuestion(); // Refresh tampilan
+                         });
+
+                         optionsContainer.appendChild(optionElement);
+                    });
+
+                    // Bersihkan kontainer dan tambahkan elemen baru
+                    quizContainer.innerHTML = '';
+                    quizContainer.appendChild(questionNumber);
+                    quizContainer.appendChild(questionText);
+                    quizContainer.appendChild(optionsContainer);
+
+                    // Update status tombol navigasi
+                    prevBtn.disabled = currentQuestion === 0;
+
+                    if (currentQuestion === quizData.length - 1) {
+                         nextBtn.innerHTML =
+                              'Kirim <i class="fas fa-paper-plane"></i>';
+                         nextBtn.classList.add('btn-submit');
+                         nextBtn.classList.remove('btn-next');
+                    } else {
+                         nextBtn.innerHTML =
+                              'Berikutnya <i class="fas fa-arrow-right"></i>';
+                         nextBtn.classList.add('btn-next');
+                         nextBtn.classList.remove('btn-submit');
+                    }
+
+                    // Update skor saat ini
+                    currentScoreDisplay.textContent = score;
+
+                    // Render ulang MathJax
+                    if (window.MathJax) {
+                         MathJax.typesetPromise();
+                    }
+               }
+
+               // Fungsi untuk menampilkan hasil
+               function submitQuiz() {
+                    clearInterval(timerInterval);
+
+                    // Hitung skor
+                    score = 0;
+                    quizData.forEach((question, index) => {
+                         if (userAnswers[index] === question.answer) {
+                              score += 20;
+                         }
+                    });
+
+                    // Tampilkan skor akhir
+                    finalScoreDisplay.textContent = score;
+
+                    // Tampilkan pesan berdasarkan skor
+                    if (score >= 80) {
+                         scoreMessage.textContent =
+                              'Sangat Baik! Pemahaman Anda tentang eksponen sangat baik';
+                    } else if (score >= 60) {
+                         scoreMessage.textContent =
+                              'Bagus! Anda memahami konsep dasar eksponen dengan baik';
+                    } else {
+                         scoreMessage.textContent =
+                              'Perlu belajar lagi. Pelajari kembali konsep dasar eksponen.';
+                    }
+
+                    // // Tampilkan feedback untuk setiap soal
+                    // feedbackContainer.innerHTML = '<h3>Detail Jawaban</h3>';
+                    // quizData.forEach((question, index) => {
+                    //      const feedbackItem = document.createElement('div');
+                    //      feedbackItem.className = 'feedback-item';
+
+                    //      const questionText = document.createElement('div');
+                    //      questionText.className = 'feedback-question';
+                    //      questionText.innerHTML = `Soal ${index + 1}: ${
+                    //           question.question
+                    //      }`;
+
+                    //      const userAnswer = document.createElement('div');
+                    //      userAnswer.textContent = `Jawaban Anda: ${
+                    //           userAnswers[index] !== null
+                    //                ? String.fromCharCode(
+                    //                       65 + userAnswers[index]
+                    //                  )
+                    //                : 'Tidak dijawab'
+                    //      }`;
+
+                    //      const correctAnswer = document.createElement('div');
+                    //      correctAnswer.className = 'feedback-answer';
+
+                    //      const explanation = document.createElement('div');
+                    //      explanation.className = 'feedback-explanation';
+                    //      explanation.textContent = `Penjelasan: ${question.explanation}`;
+
+                    //      // Warna feedback berdasarkan kebenaran jawaban
+                    //      if (userAnswers[index] === question.answer) {
+                    //           feedbackItem.style.borderLeft =
+                    //                '4px solid #28a745';
+                    //      } else {
+                    //           feedbackItem.style.borderLeft =
+                    //                '4px solid #dc3545';
+                    //      }
+
+                    //      feedbackItem.appendChild(questionText);
+                    //      feedbackItem.appendChild(userAnswer);
+                    //      feedbackItem.appendChild(correctAnswer);
+                    //      feedbackItem.appendChild(explanation);
+                    //      feedbackContainer.appendChild(feedbackItem);
+                    // });
+
+                    // Sembunyikan kuis dan tampilkan hasil
+                    document.querySelector('.navigation').style.display =
+                         'none';
+                    quizContainer.style.display = 'none';
+                    resultContainer.style.display = 'block';
+
+                    // Render ulang MathJax untuk feedback
+                    if (window.MathJax) {
+                         MathJax.typesetPromise();
+                    }
+               }
+
+               // Fungsi untuk menginisialisasi kuis
+               function initializeQuiz() {
+                    // Event listener untuk navigasi
+                    prevBtn.addEventListener('click', () => {
+                         if (currentQuestion > 0) {
+                              currentQuestion--;
+                              showQuestion();
+                         }
+                    });
+
+                    nextBtn.addEventListener('click', () => {
+                         if (currentQuestion < quizData.length - 1) {
+                              currentQuestion++;
+                              showQuestion();
+                         } else {
+                              submitQuiz();
+                         }
+                    });
+
+                    restartBtn.addEventListener('click', () => {
+                         // Reset semua variabel
+                         currentQuestion = 0;
+                         score = 0;
+                         userAnswers = new Array(quizData.length).fill(null);
+                         timeLeft = 600;
+
+                         // Reset tampilan
+                         document.querySelector('.navigation').style.display =
+                              'flex';
+                         quizContainer.style.display = 'block';
+                         resultContainer.style.display = 'none';
+
+                         // Mulai timer lagi
+                         startTimer();
+
+                         // Tampilkan soal pertama
+                         showQuestion();
+                    });
+
+                    // Mulai aplikasi
+                    startTimer();
+                    showQuestion();
+               }
+          </script>
+     </body>
+</html>
